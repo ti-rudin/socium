@@ -10,7 +10,7 @@ for (index = 1; index <= i; index++) {
   var canvas = document.getElementById('circle');
     var obCanvas = canvas.getContext('2d');
     obCanvas.beginPath();
-    obCanvas.arc(140+(index*20), 75, 10, 0, 2*Math.PI, false);
+    obCanvas.arc(101+(index*20), 75, 10, 0, 2*Math.PI, false);
     obCanvas.fillStyle = 'red';
     obCanvas.fill();
     obCanvas.lineWidth = 1;
