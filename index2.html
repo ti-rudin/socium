@@ -67,7 +67,7 @@
 
         function draw(){ // START draw()
 
-            ctx.clearRect(0,0,W,H);
+            ctx.clearRect(0, 0,W,H);
 
             for (var i=0;i<150;i++) // START FOR
             {
@@ -88,7 +88,7 @@
                 }
 
                 ctx.beginPath();
-                ctx.arc(tempCircle.x, tempCircle.y, tempCircle.r, 0, 2*Math.PI, false);
+                ctx.arc(tempCircle.x*4, tempCircle.y, tempCircle.r, 0, 2*Math.PI, false);
                 ctx.fillStyle = tempCircle.color;
                 ctx.fill();
 

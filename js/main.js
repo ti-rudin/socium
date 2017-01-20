@@ -1,5 +1,8 @@
 window.onload=function(){
 i=7;
+var sex = ["М","Ж"];
+var man = new Array();
+    man[0]
 for (index = 1; index <= i; index++) {
   var obj = new Object();
   obj.name = 'й' + index;
