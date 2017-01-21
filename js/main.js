@@ -1,11 +1,11 @@
-window.onload=function(){
+
 window.requestAnimFrame = (function(callback) {
         return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
         function(callback) {
           window.setTimeout(callback, 1000 / 60);
         };
       })();
-
+window.onload=function(){
 
 var arr = new Array();
 for(i=0;i<5;i++){
@@ -54,9 +54,10 @@ for (i = 0; i <= stepx-1; i++) {
 
       context.font = '10pt Calibri';
       context.fillStyle = 'blue';
+      //context.textAlign = 'center';
       context.fillText(obj.name, (j+1)*step-5, (i+1)*step+5);
 
-      var radius = 25;
+      var radius = 20;
       context.beginPath();
       context.arc((obj.x+1)*step, (obj.y+1)*step, radius, 0, 2 * Math.PI, false);
       context.lineWidth = 1;
