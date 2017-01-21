@@ -1,24 +1,40 @@
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <style>
-      body {
-        margin: 0px;
-        padding: 0px;
-      }
-    </style>
-  </head>
-  <body>
-    <canvas id="myCanvas" width="578" height="200"></canvas>
-    <script>
-      window.requestAnimFrame = (function(callback) {
+window.onload=function(){
+
+var WidthSpace=500;
+var HeightSpace=500;
+var step=50;
+var stepx=WidthSpace/step;
+var stepy=HeightSpace/step;
+
+var space = new Array();
+var sum=1;
+for (i = 0; i <= (stepx-1); i++) {
+    space[i]=new Array();
+    for (j = 0; j <= (stepy-1); j++) {
+
+        
+        space[i][j]=sum;//заполнили массив
+        sum++;
+        }
+
+    }
+console.log(space);
+var canvas = document.getElementById('myCanvas');
+var context = canvas.getContext('2d');
+function rand (min, max)
+{
+  min = parseInt(min);
+  max = parseInt(max);
+  return Math.floor( Math.random() * (max - min + 1) ) + min;
+}
+window.requestAnimFrame = (function(callback) {
         return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
         function(callback) {
           window.setTimeout(callback, 1000 / 60);
         };
       })();
 
-      function drawRectangle(myRectangle, context) {
+function drawRectangle(myRectangle, context) {
         context.beginPath();
         context.rect(myRectangle.x, myRectangle.y, myRectangle.width, myRectangle.height);
         context.fillStyle = '#8ED6FF';
@@ -67,6 +83,4 @@
         var startTime = (new Date()).getTime();
         animate(myRectangle, canvas, context, startTime);
       }, 1000);
-    </script>
-  </body>
-</html>      
+}
