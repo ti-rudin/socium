@@ -1,0 +1,27 @@
+<html>
+<head><title>Двумірний масив</title></head>
+<body>
+
+
+<form name="form">
+m = <input type="text" name="m" size="5"><br><br>
+n = <input type="text" name="n" size="5"><br><br>
+<input type="button" value="Порахувати у" OnClick="mas();"><br><br>
+</form>
+
+
+<script language="JavaScript">
+
+var arr = new Array();
+for(i=0;i<5;i++){
+arr[i]= new Array();
+for(j=0;j<10;j++){
+    s=(i+1)*10+j-10;
+    arr[i][j]= s;
+}
+}
+console.log(arr);
+</script>
+
+</body>
+</html>
