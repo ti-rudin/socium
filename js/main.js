@@ -1,22 +1,45 @@
 
 window.onload = function () {
+
+/**
+ *  * Provides requestAnimationFrame in a cross browser way.
+ *  * http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+ *  */
+
+if ( !window.requestAnimationFrame ) {
+
+        window.requestAnimationFrame = ( function() {
+
+                return window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame || // comment out if FF4 is slow (it caps framerate at ~30fps: https://bugzilla.mozilla.org/show_bug.cgi?id=630127)
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimationFrame ||
+                function( /* function FrameRequestCallback */ callback, /* DOMElement Element */ element ) {
+
+                        window.setTimeout( callback, 1000 / 60 );
+
+                };
+
+        } )();
+
+}
 function rand(min, max) {
   min = parseInt(min);
   max = parseInt(max);
   return Math.floor( Math.random() * (max - min + 1) ) + min;
 }
-space = [];
-space2 = [];    
+
     var lud = [];
     var pop = 40;
-    var WidthSpace = 800;
-    var HeightSpace = 500;
-    var step = 1;
+    var WidthSpace = 500;
+    var HeightSpace = 400;
+    var step = 3;
     var stepx = WidthSpace / step;
     var stepy = HeightSpace / step;
     var radius = 19;
 
-
+space = [];
+space2 = [];
     for (i = 0; i <= (stepx - 1); i++) {
         space[i] = [];
         for (j = 0; j <= (stepy - 1); j++) {
@@ -35,7 +58,7 @@ space2 = [];
 //console.log(space2);    
     
 space[2][2] = 4;
-space[46][55] = 7;
+space[46][155] = 7;
 space[19][31] = 13;
 space[22][44] = 4;
 space[153][5] = 7;
@@ -109,8 +132,8 @@ for (i = 0; i <= stepx - 1; i++) {
 }
 
 
-render();
-calculate();    
-setInterval(function() {render();calculate();}, 1);  
+//render();
+//calculate();
+setInterval(function() {render();calculate();}, 100);
 
 }
