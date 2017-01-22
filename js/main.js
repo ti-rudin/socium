@@ -9,12 +9,12 @@ space = [];
 space2 = [];    
     var lud = [];
     var pop = 40;
-    var WidthSpace = 500;
+    var WidthSpace = 800;
     var HeightSpace = 500;
-    var step = 20;
+    var step = 1;
     var stepx = WidthSpace / step;
     var stepy = HeightSpace / step;
-
+    var radius = 19;
 
 
     for (i = 0; i <= (stepx - 1); i++) {
@@ -35,9 +35,12 @@ space2 = [];
 //console.log(space2);    
     
 space[2][2] = 4;
-space[4][5] = 7;
-space[1][3] = 13;
-space[7][2] = 5; //вручную разместили первых 4
+space[46][55] = 7;
+space[19][31] = 13;
+space[22][44] = 4;
+space[153][5] = 7;
+space[13][61] = 13;
+space[5][8] = 5; //вручную разместили первых 4
 
 
 var canvas = document.getElementById('myCanvas');
@@ -45,7 +48,7 @@ var context = canvas.getContext('2d');
 
 var s=1;
 function render (){
-context.clearRect(0,0,WidthSpace,HeightSpace);
+context.clearRect(0,0,WidthSpace+100,HeightSpace);
 for (i = 0; i <= stepx - 1; i++) {
     for (j = 0; j <= stepy - 1; j++) {
 
@@ -57,7 +60,7 @@ if (space[i][j]>0) {
       //context.textAlign = 'center';
       context.fillText(space[i][j], (i+1)*step-5, (j+1)*step+5);
 
-      var radius = 15;
+      
       context.beginPath();
       context.arc((i+1)*step, (j+1)*step, radius, 0, 2 * Math.PI, false);
       context.lineWidth = 1;
@@ -108,6 +111,6 @@ for (i = 0; i <= stepx - 1; i++) {
 
 render();
 calculate();    
-setInterval(function() {render();calculate();}, 500);  
+setInterval(function() {render();calculate();}, 1);  
 
 }
