@@ -5,12 +5,13 @@ function rand(min, max) {
   max = parseInt(max);
   return Math.floor( Math.random() * (max - min + 1) ) + min;
 }
-    var space = [];
+space = [];
+space2 = [];    
     var lud = [];
     var pop = 40;
     var WidthSpace = 500;
     var HeightSpace = 500;
-    var step = 30;
+    var step = 20;
     var stepx = WidthSpace / step;
     var stepy = HeightSpace / step;
 
@@ -22,8 +23,16 @@ function rand(min, max) {
         space[i][j] = 0;//обнулили массив
         }
     }
+    for (i = 0; i <= (stepx - 1); i++) {
+        space2[i] = [];
+        for (j = 0; j <= (stepy - 1); j++) {
+        space2[i][j] = 0;//обнулили массив
+        }
+    }
 
-console.log(space);
+
+//console.log(space);
+//console.log(space2);    
     
 space[2][2] = 4;
 space[4][5] = 7;
@@ -36,6 +45,7 @@ var context = canvas.getContext('2d');
 
 var s=1;
 function render (){
+context.clearRect(0,0,WidthSpace,HeightSpace);
 for (i = 0; i <= stepx - 1; i++) {
     for (j = 0; j <= stepy - 1; j++) {
 
@@ -47,7 +57,7 @@ if (space[i][j]>0) {
       //context.textAlign = 'center';
       context.fillText(space[i][j], (i+1)*step-5, (j+1)*step+5);
 
-      var radius = 25;
+      var radius = 15;
       context.beginPath();
       context.arc((i+1)*step, (j+1)*step, radius, 0, 2 * Math.PI, false);
       context.lineWidth = 1;
@@ -60,26 +70,44 @@ if (space[i][j]>0) {
       }
     }
 }
+    var a=1;
+    
 function calculate (){
-  for (i = 0; i <= stepx - 1; i++) {
+for (i = 0; i <= (stepx - 1); i++) {
+        space2[i] = [];
+        for (j = 0; j <= (stepy - 1); j++) {
+        space2[i][j] = 0;
+            //обнулили массив 2
+        }
+    } 
+    
+for (i = 0; i <= stepx - 1; i++) {
     for (j = 0; j <= stepy - 1; j++) {
-      if (space[i][j]>0) {
-          a=i+1;
-          space[a][j]=space[i][j];
-          space[i][j]=0;
+      if (space[i][j]>0) { 
 
+        if ((i+1)>(stepx-1)) {s=0;} else {s=i+1;}
+    
+         space2[s][j]=space[i][j];
+         space2[i][j]=0; 
+    
       }
 
     }
-  }
+  } 
+    
+
+ for (i = 0; i <= stepx - 1; i++) {
+    for (j = 0; j <= stepy - 1; j++) {
+     
+        space[i][j]=space2[i][j]; 
+    }
 }
-    render();
-calculate ();
-        render();
-calculate ();    render();
-calculate ();    render();
-calculate ();
+ 
+}
 
 
+render();
+calculate();    
+setInterval(function() {render();calculate();}, 500);  
 
 }
