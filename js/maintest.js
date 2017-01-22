@@ -61,55 +61,43 @@ window.onload = function () {
             if ((man[4])==1) {
             man[0] = lud[key][2];
             man[1] = lud[key][3]-newY;
-            lud[key][0]=man[0];
-            lud[key][1]=man[1];
-
-            if ((man[1]) <= 0) {
-            lud[key][4] = 5;
 
 
             }
             if ((man[4])==2) {
             man[0] = lud[key][2]+newY;
             man[1] = lud[key][3]-newY;
-            lud[key][0]=man[0];
-            lud[key][1]=man[1];
+
             }
             if ((man[4])==3) {
             man[0] = lud[key][2]+newY;
             man[1] = lud[key][3];
-            lud[key][0]=man[0];
-            lud[key][1]=man[1];
+
             }
             if ((man[4])==4) {
             man[0] = lud[key][2]+newY;
             man[1] = lud[key][3]+newY;
-            lud[key][0]=man[0];
-            lud[key][1]=man[1];
+
             }
             if ((man[4])==5) {
             man[0] = lud[key][2];
             man[1] = lud[key][3]+newY;
-            lud[key][0]=man[0];
-            lud[key][1]=man[1];
+
             }
             if ((man[4])==6) {
             man[0] = lud[key][2]-newX;
             man[1] = lud[key][3]+newY;
-            lud[key][0]=man[0];
-            lud[key][1]=man[1];
+
             }
             if ((man[4])==7) {
             man[0] = lud[key][2]-newX;
             man[1] = lud[key][3];
-            lud[key][0]=man[0];
-            lud[key][1]=man[1];
+
             }
             if ((man[4])==7) {
             man[0] = lud[key][2]-newX;
             man[1] = lud[key][3]-newY;
-            lud[key][0]=man[0];
-            lud[key][1]=man[1];
+
             }
 
 //смотрим координаты и пересчитываем направление
