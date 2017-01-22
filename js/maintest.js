@@ -61,6 +61,10 @@ window.onload = function () {
             if ((man[4])==1) {
             man[0] = lud[key][2];
             man[1] = lud[key][3]-newY;
+            if ((man[1]) <= 0) {
+            lud[key][4] = 5;
+            lud[key][3] = man[1];
+            }
 
 
             }
@@ -151,8 +155,8 @@ window.onload = function () {
 
     var lud = [
         [10,50,10,50,7,3,'red'],
-        [70,70,70,70,1,3,'red'],
-        [155,155,155,155,7,6,'red'],
+        [70,70,70,70,1,3,'blue'],
+        [155,155,155,155,7,3,'green'],
         [197,197,197,197,6,5,'red']
     ]
     for (var key in lud) {
