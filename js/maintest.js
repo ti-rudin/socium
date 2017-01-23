@@ -14,9 +14,9 @@ window.onload = function () {
                               )();
 //переменные
     'use strict';
-    var W = 500,
-        H = 500,
-        step = 50,
+    var W = 300,
+        H = 400,
+        step = 100,
         stepx = W / step,
         stepy = H / step,
         canvas = document.getElementById('myCanvas'),
@@ -31,7 +31,7 @@ window.onload = function () {
             radius = man[5];
         //console.log(man);
         context.beginPath();
-        context.arc(x, y, 25, 0, 2 * Math.PI, false);
+        context.arc(x, y, radius, 0, 2 * Math.PI, false);
         context.fillStyle = color;
         context.fill();
         context.lineWidth = radius;
@@ -55,7 +55,7 @@ window.onload = function () {
         // clear
             context.clearRect(0, 0, canvas.width, canvas.height);
 
-    //смотрим направление и пересчитываем координаты
+//смотрим направление и пересчитываем координаты
         for (var key in lud) {
             var man=lud[key];
            
@@ -111,17 +111,15 @@ window.onload = function () {
 
         }
 
-            //рендерим
+//рендерим
         for (var key in lud) {
             man=lud[key];
             drawMan(man);
-
-
-        }
+            }
 
 
 //пересчитываем направления
-for (var key in lud) {
+        for (var key in lud) {
             var man=lud[key];
             switch (man[4]) {
                 case 1:{//вверх
@@ -167,8 +165,6 @@ for (var key in lud) {
 
         }
 
-
-
         }
         // request new frame
         requestAnimFrame(function () {
@@ -177,43 +173,37 @@ for (var key in lud) {
         });
 
 
-
-
     }
-
-
 //конец ядра
 
     var myWorld = {
-        x: 30,
-        y: 30,
-        width: 100,
-        height: 50,
-        borderWidth: 5
+        
     };
 
-
     var lud = [
-        [100,250,0,0,4,1,'blue'],
-        [10,350,100,150,6,1,'red'],
-    //    [50,50,100,150,1,1,'red'],
-        
+        [100,250,0,0,4,10,'gray'],
+        [10,350,100,150,3,7,'red'],
+        [50,150,0,0,1,4,'blue'],
+        [200,50,0,0,3,1,'black'],
+        [300,350,0,0,5,5,'green'],
+         [130,120,0,0,4,3,'gray'],
+        [130,320,100,150,2,7,'red'],
+        [430,350,0,0,1,3,'blue'],
+        [400,230,0,0,3,1,'black'],
+        [320,120,0,0,1,9,'green'],  
+          [150,370,0,0,4,4,'gray'],
+        [140,250,100,150,1,7,'red'],
+        [120,460,0,0,1,16,'blue'],
+        [230,240,0,0,2,11,'black'],
+        [340,330,0,0,3,5,'green'],  
+        [240,450,0,0,4,19,'gray'],
+        [310,150,100,150,2,2,'red'],
+        [130,120,0,0,1,1,'blue'],
+        [350,120,0,0,3,7,'black'],
+        [150,330,0,0,1,5,'green'],  
     ]
- //   for (var key in lud) {
-    //console.log(key+':'+lud[key][1])
-//    }
 
-   // for (var key in lud) {
-//        drawMan(lud[key]);}
-
-
-
-
-
-
-      // wait one second before starting animation
-   // console.log(i);
-    //пересчитываемпараметры
+    //начинаем
      var startTime = (new Date()).getTime();
         animate(lud, canvas, context, startTime);
 
