@@ -45,11 +45,11 @@ window.onload = function () {
     function animate(myWorld, canvas, context, startTime) {
         // update
         var time = (new Date()).getTime() - startTime,
-            linearSpeed = 10,// pixels / second
-            newX = Math.round(linearSpeed * time / 100),
-            newY = Math.round(linearSpeed * time / 100);
+            linearSpeed = 100,// pixels / second
+            newX = Math.round(linearSpeed * time / 1000),
+            newY = Math.round(linearSpeed * time / 1000);
 
-        if (newX <= step*20) {
+        if (newX <= step*300) {
 
         // clear
             context.clearRect(0, 0, canvas.width, canvas.height);
@@ -57,70 +57,37 @@ window.onload = function () {
     //смотрим направление и пересчитываем координаты
         for (var key in lud) {
             man=lud[key];
+            
+            var a = 2+2
+switch (man[4]) {
+  case 1:{
+            man[0] = lud[key][0];
+            man[1] = lud[key][1]-1;
+                if ((man[1]) == 0) {
+                    lud[key][4] = 5; 
+                    lud[key][1] = 1;
+                    lud[key][0] = man[0];}}
+                     
+    break
+  case 5:{
+            man[0] = lud[key][0];
+            man[1] = lud[key][1]+1;
+                if ((man[1]) == 300) {
+                    lud[key][4] = 1; 
+                    lud[key][1] = 300;
+                    lud[key][0] = man[0];}}
+    break
+  
+  default:
+    alert('Я таких значений не знаю')
+}
 
-            if ((man[4])==1) {
-            man[0] = lud[key][2];
-            man[1] = lud[key][3]-newY;
-            if ((man[1]) <= 0) {
-            lud[key][4] = 5;
-            lud[key][3] = man[1];
-            }
+            
+            
+
+           
 
 
-            }
-            if ((man[4])==2) {
-            man[0] = lud[key][2]+newY;
-            man[1] = lud[key][3]-newY;
-
-            }
-            if ((man[4])==3) {
-            man[0] = lud[key][2]+newY;
-            man[1] = lud[key][3];
-
-            }
-            if ((man[4])==4) {
-            man[0] = lud[key][2]+newY;
-            man[1] = lud[key][3]+newY;
-
-            }
-            if ((man[4])==5) {
-            man[0] = lud[key][2];
-            man[1] = lud[key][3]+newY;
-
-            }
-            if ((man[4])==6) {
-            man[0] = lud[key][2]-newX;
-            man[1] = lud[key][3]+newY;
-
-            }
-            if ((man[4])==7) {
-            man[0] = lud[key][2]-newX;
-            man[1] = lud[key][3];
-
-            }
-            if ((man[4])==7) {
-            man[0] = lud[key][2]-newX;
-            man[1] = lud[key][3]-newY;
-
-            }
-
-//смотрим координаты и пересчитываем направление
-            if ((man[0]) <= 0) {
-            lud[key][4] = 3;
-            lud[key][2] = 1
-            }
-            if ((man[1])<=0) {
-            lud[key][4] = 5;
-            lud[key][3] = 1
-            }
-            if ((man[0]) >= 500) {
-            lud[key][4] = 7;
-            lud[key][2]= 499;
-            }
-            if ((man[1]) >= 500) {
-            lud[key][4] = 1;
-            lud[key][3] = 499;
-            }
 
 
 
@@ -154,10 +121,11 @@ window.onload = function () {
 
 
     var lud = [
-        [10,50,10,50,7,3,'red'],
-        [70,70,70,70,1,3,'blue'],
-        [155,155,155,155,7,3,'green'],
-        [197,197,197,197,6,5,'red']
+        [100,250,100,150,1,1,'red'],
+        [300,350,100,150,1,1,'red'],
+        [50,1,100,150,5,1,'red'],
+        [63,1,100,150,5,1,'red'],
+        
     ]
     for (var key in lud) {
     //console.log(key+':'+lud[key][1])
