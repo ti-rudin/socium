@@ -8,15 +8,16 @@ window.onload = function () {
     window.requestAnimFrame = (function (callback) {
         return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
             function (callback) {
-                window.setTimeout(callback, 1000 / 60);
+                window.setTimeout(callback, 1000/60);
             };
     }
                               )();
 //переменные
     'use strict';
-    var W = 300,
-        H = 400,
-        step = 100,
+    var W = 500,
+        H = 500,
+        step = 720,
+        v = 2; //скорость пикселей/сек
         stepx = W / step,
         stepy = H / step,
         canvas = document.getElementById('myCanvas'),
@@ -46,9 +47,9 @@ window.onload = function () {
         // update
 
         var time = (new Date()).getTime() - startTime,
-            linearSpeed = 1,// pixels / second
-            newX = Math.round(linearSpeed * time / 1000),
-            newY = Math.round(linearSpeed * time / 1000);
+            linearSpeed = 10,// pixels / second
+            newX = (linearSpeed * time / 100),
+            newY = (linearSpeed * time / 100);
 
         if (newX <= step) {
 
@@ -56,48 +57,48 @@ window.onload = function () {
             context.clearRect(0, 0, canvas.width, canvas.height);
 
 //смотрим направление и пересчитываем координаты
-        for (var key in lud) {
-            var man=lud[key];
+        for (var key in myWorld) {
+            var man=myWorld[key];
            
             switch (man[4]) {
                 case 1:{
                     man[0] = lud[key][0];
-                    man[1] = lud[key][1]-1;
+                    man[1] = lud[key][1]-v;
                     }
                 break
                 case 2:{
-                    man[0] = lud[key][0]+1;
-                    man[1] = lud[key][1]-1;
+                    man[0] = lud[key][0]+v;
+                    man[1] = lud[key][1]-v;
                     }
                 break
                 case 3:{
-                    man[0] = lud[key][0]+1;
+                    man[0] = lud[key][0]+v;
                     man[1] = lud[key][1];
                     }
                 break
                 case 4:{
-                    man[0] = lud[key][0]+1;
-                    man[1] = lud[key][1]+1;
+                    man[0] = lud[key][0]+v;
+                    man[1] = lud[key][1]+v;
                     }
                 break
                 case 5:{
                     man[0] = lud[key][0];
-                    man[1] = lud[key][1]+1;
+                    man[1] = lud[key][1]+v;
                     }
                     break
                 case 6:{
-                    man[0] = lud[key][0]-1;
-                    man[1] = lud[key][1]+1;
+                    man[0] = lud[key][0]-v;
+                    man[1] = lud[key][1]+v;
                     }
                 break
                 case 7:{
-                    man[0] = lud[key][0]-1;
+                    man[0] = lud[key][0]-v;
                     man[1] = lud[key][1];
                     }
                 break
                 case 8:{
-                    man[0] = lud[key][0]-1;
-                    man[1] = lud[key][1]-1;
+                    man[0] = lud[key][0]-v;
+                    man[1] = lud[key][1]-v;
                     }
                 break
                 case 0:{
@@ -112,47 +113,51 @@ window.onload = function () {
         }
 
 //рендерим
-        for (var key in lud) {
+        for (var key in myWorld) {
             man=lud[key];
             drawMan(man);
             }
 
 
 //пересчитываем направления
-        for (var key in lud) {
-            var man=lud[key];
+        for (var key in myWorld) {
+            var man=myWorld[key];
             switch (man[4]) {
                 case 1:{//вверх
-                    if ((man[1]) < 0) {lud[key][4] = 5; }
+                    if ((man[1]) < 0) {myWorld[key][4] = 5; }
                     }
                 break
                 case 2:{//вверх-вправо
-                    if (((man[1]) < 0)||(man[0] > W)) {lud[key][4] = 8; }
+                    if ((man[1]) < 0) {myWorld[key][4] = 4; }
+                    if ((man[0]) > W) {myWorld[key][4] = 8; }
                     }
                 break
                 case 3:{//вправо
-                    if ((man[0]) > W) {lud[key][4] = 7; }
+                    if ((man[0]) > W) {myWorld[key][4] = 7; }
                     }
                 break
                 case 4:{//вправо-вниз
-                    if (((man[1]) > H)||(man[0] > W)) {lud[key][4] = 2; }
+                    if ((man[0]) > W) {myWorld[key][4] = 6; }
+                    if ((man[1]) > H) {myWorld[key][4] = 2; }
                     }
                 break
                 case 5:{//вниз
-                    if (man[1] > H){lud[key][4] = 1;}
+                    if (man[1] > H){myWorld[key][4] = 1;}
                     }
                 break
                 case 6:{//влево-вниз
-                    if (((man[1]) > H)||(man[0] < 0)) {lud[key][4] = 4; }
+                    if ((man[0]) < 0) {myWorld[key][4] = 4; }
+                    if ((man[1]) > H) {myWorld[key][4] = 8; }
                     }
                 break
                 case 7:{//влево
-                    if ((man[0]) < 0) {lud[key][4] = 3; }
+                    if ((man[0]) < 0) {myWorld[key][4] = 3; }
                     }
                 break
                 case 8:{//влево-вверх
-                    if (((man[1]) < 0)||(man[0] < 0)) {lud[key][4] = 6; }
-                    }
+                    if ((man[0]) < 0) {myWorld[key][4] = 2; }
+                    if ((man[1]) < 0) {myWorld[key][4] = 6; }
+                }
                 break
 
                 case 0:{
@@ -167,6 +172,7 @@ window.onload = function () {
 
         }
         // request new frame
+        //console.log(step);
         requestAnimFrame(function () {
             animate(myWorld, canvas, context, startTime);
 
