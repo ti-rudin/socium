@@ -1,139 +1,161 @@
-
 window.onload = function () {
-
-/**
- *  * Provides requestAnimationFrame in a cross browser way.
- *  * http://paulirish.com/2011/requestanimationframe-for-smart-animating/
- *  */
-
-if ( !window.requestAnimationFrame ) {
-
-        window.requestAnimationFrame = ( function() {
-
-                return window.webkitRequestAnimationFrame ||
-                window.mozRequestAnimationFrame || // comment out if FF4 is slow (it caps framerate at ~30fps: https://bugzilla.mozilla.org/show_bug.cgi?id=630127)
-                window.oRequestAnimationFrame ||
-                window.msRequestAnimationFrame ||
-                function( /* function FrameRequestCallback */ callback, /* DOMElement Element */ element ) {
-
-                        window.setTimeout( callback, 1000 / 60 );
-
-                };
-
-        } )();
-
-}
-function rand(min, max) {
-  min = parseInt(min);
-  max = parseInt(max);
-  return Math.floor( Math.random() * (max - min + 1) ) + min;
-}
-
-    var lud = [];
-    var pop = 40;
-    var WidthSpace = 500;
-    var HeightSpace = 400;
-    var step = 3;
-    var stepx = WidthSpace / step;
-    var stepy = HeightSpace / step;
-    var radius = 19;
-
-space = [];
-space2 = [];
-    for (i = 0; i <= (stepx - 1); i++) {
-        space[i] = [];
-        for (j = 0; j <= (stepy - 1); j++) {
-        space[i][j] = 0;//обнулили массив
-        }
+//сервисные функции
+    function rand(min, max) {
+        min = parseInt(min, 10);
+        max = parseInt(max, 10);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-    for (i = 0; i <= (stepx - 1); i++) {
-        space2[i] = [];
-        for (j = 0; j <= (stepy - 1); j++) {
-        space2[i][j] = 0;//обнулили массив
-        }
+    window.requestAnimFrame = (function (callback) {
+        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+            function (callback) {
+                window.setTimeout(callback, 1000/60);
+            };
     }
+                              )();
+//переменные
+    'use strict';
+    var v = 2; //скорость пикселей/сек
+        canvas = document.getElementById('myCanvas'),
+        context = canvas.getContext('2d');
 
-
-//console.log(space);
-//console.log(space2);    
+//ядровые функции    
     
-space[2][2] = 4;
-space[46][155] = 7;
-space[19][31] = 13;
-space[22][44] = 4;
-space[153][5] = 7;
-space[13][61] = 13;
-space[5][8] = 5; //вручную разместили первых 4
+    function drawMan(man) {
+        var x = man[0],
+            y = man[1],
+            radius = man[2],
+            color = man[4];
+            
 
-
-var canvas = document.getElementById('myCanvas');
-var context = canvas.getContext('2d');
-
-var s=1;
-function render (){
-context.clearRect(0,0,WidthSpace+100,HeightSpace);
-for (i = 0; i <= stepx - 1; i++) {
-    for (j = 0; j <= stepy - 1; j++) {
-
-if (space[i][j]>0) {
-        
-
-      context.font = '10pt Calibri';
-      context.fillStyle = 'blue';
-      //context.textAlign = 'center';
-      context.fillText(space[i][j], (i+1)*step-5, (j+1)*step+5);
-
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI, false);
+        context.fillStyle = color;
+        context.fill();
+        context.lineWidth = radius;
+        context.strokeStyle = 'black';
+        context.stroke();
+    }
+///////  
+    
+world = {
+    H: 200, 
+    W: 200,
+    Day: 3,
+    v: 5,
+    lud: {x : 0,
+          y : 0,
+          r : 0,
+          d : 0,
+          c : 0}, 
+    calculate: function() {
+   //смотрим направление и пересчитываем координаты
+    for (var key in this.lud)   {
+        man = this.lud[key];
+        switch (man[3]) {
+                case 1:{
+                    man[0] = this.lud[key][0];
+                    man[1] = this.lud[key][1]-v;
+                    if ((man[1]) < 0) {man[3] = 5; } //пересчитываем направление 
+                    }
+                break
+                case 2:{
+                    man[0] = man[0]+v;
+                    man[1] = man[1]-v;
+                    if ((man[1]) < 0) {man[3] = 4; }
+                    if ((man[0]) > world.W) {man[3] = 8; }
+                    }
+                break
+                case 3:{
+                    man[0] = man[0]+v;
+                    man[1] = man[1];
+                    if ((man[0]) > world.W) {man[3] = 7; }
+                    }
+                break
+                case 4:{
+                    man[0] = man[0]+v;
+                    man[1] = man[1]+v;
+                    if ((man[0]) > world.W) {man[3] = 6; }
+                    if ((man[1]) > world.H) {man[3] = 2; }
+                    }
+                break
+                case 5:{
+                    man[0] = man[0];
+                    man[1] = man[1]+v;
+                    if (man[1] > world.H){man[3] = 1;}
+                    }
+                    break
+                case 6:{
+                    man[0] = man[0]-v;
+                    man[1] = man[1]+v;
+                    if ((man[0]) < 0) {man[3] = 4; }
+                    if ((man[1]) > world.H) {man[3] = 8; }
+                    }
+                break
+                case 7:{
+                    man[0] = man[0]-v;
+                    man[1] = man[1];
+                    if ((man[0]) < 0) {man[3] = 3; }
+                    }
+                break
+                case 8:{
+                    man[0] = man[0]-v;
+                    man[1] = man[1]-v;
+                    if ((man[0]) < 0) {man[3] = 2; }
+                    if ((man[1]) < 0) {man[3] = 6; }
+                    }
+                break
+                case 0:{
+                    man[0] = man[0];
+                    man[1] = man[1];
+                    }
+                break
+                default:
+            alert('1')
+            }
       
-      context.beginPath();
-      context.arc((i+1)*step, (j+1)*step, radius, 0, 2 * Math.PI, false);
-      context.lineWidth = 1;
-
-      // line color
-      context.strokeStyle = 'red';
-      context.stroke();
-      }
-//console.log(obj);
-      }
-    }
-}
-    var a=1;
-    
-function calculate (){
-for (i = 0; i <= (stepx - 1); i++) {
-        space2[i] = [];
-        for (j = 0; j <= (stepy - 1); j++) {
-        space2[i][j] = 0;
-            //обнулили массив 2
-        }
-    } 
-    
-for (i = 0; i <= stepx - 1; i++) {
-    for (j = 0; j <= stepy - 1; j++) {
-      if (space[i][j]>0) { 
-
-        if ((i+1)>(stepx-1)) {s=0;} else {s=i+1;}
-    
-         space2[s][j]=space[i][j];
-         space2[i][j]=0; 
-    
-      }
 
     }
-  } 
-    
-
- for (i = 0; i <= stepx - 1; i++) {
-    for (j = 0; j <= stepy - 1; j++) {
-     
-        space[i][j]=space2[i][j]; 
-    }
-}
+        
+    //alert(this.Day + ', ' + this.lud[user][user]); 
+    },
+    render: function(){
+        context.clearRect(0, 0, canvas.width, canvas.height); //очищаем
+  
+    for (var key in this.lud)   {
+        man = this.lud[key];
+        drawMan(man);}
+    },
+    clear : function(){context.clearRect(0, 0, canvas.width, canvas.height);}
+}    
  
-}
+world.lud = [
+        [10,10,7,4,'red'],
+        [20,250,4,2,'red'],
+        [150,130,10,3,'green'],  
+    ]
+
+world.render();
+world.calculate();
+//console.log(man);
+    function animate(myWorld, canvas, context, startTime) {
+
+        var time = (new Date()).getTime() - startTime;
+           
+        world.render();
+        world.calculate();
+//world.clear();    
+        // request new frame
+        //console.log(time);
+    
+        requestAnimFrame(function () {
+            animate(myWorld, canvas, context, startTime);
+
+        });
 
 
-//render();
-//calculate();
-setInterval(function() {render();calculate();}, 100);
+    }
+//конец ядра
+startTime = (new Date()).getTime();
+//animate(world, canvas, context, startTime);  
 
-}
+};

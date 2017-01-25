@@ -47,9 +47,9 @@ window.onload = function () {
         // update
 
         var time = (new Date()).getTime() - startTime,
-            linearSpeed = 10,// pixels / second
-            newX = (linearSpeed * time / 100),
-            newY = (linearSpeed * time / 100);
+            linearSpeed = 1000,// pixels / second
+            newX = (linearSpeed * time / 1000),
+            newY = (linearSpeed * time / 1000);
 
         if (newX <= step) {
 
@@ -62,48 +62,48 @@ window.onload = function () {
            
             switch (man[4]) {
                 case 1:{
-                    man[0] = lud[key][0];
-                    man[1] = lud[key][1]-v;
+                    man[0] = myWorld[key][0];
+                    man[1] = myWorld[key][1]-v;
                     }
                 break
                 case 2:{
-                    man[0] = lud[key][0]+v;
-                    man[1] = lud[key][1]-v;
+                    man[0] = myWorld[key][0]+v;
+                    man[1] = myWorld[key][1]-v;
                     }
                 break
                 case 3:{
-                    man[0] = lud[key][0]+v;
-                    man[1] = lud[key][1];
+                    man[0] = myWorld[key][0]+v;
+                    man[1] = myWorld[key][1];
                     }
                 break
                 case 4:{
-                    man[0] = lud[key][0]+v;
-                    man[1] = lud[key][1]+v;
+                    man[0] = myWorld[key][0]+v;
+                    man[1] = myWorld[key][1]+v;
                     }
                 break
                 case 5:{
-                    man[0] = lud[key][0];
-                    man[1] = lud[key][1]+v;
+                    man[0] = myWorld[key][0];
+                    man[1] = myWorld[key][1]+v;
                     }
                     break
                 case 6:{
-                    man[0] = lud[key][0]-v;
-                    man[1] = lud[key][1]+v;
+                    man[0] = myWorld[key][0]-v;
+                    man[1] = myWorld[key][1]+v;
                     }
                 break
                 case 7:{
-                    man[0] = lud[key][0]-v;
-                    man[1] = lud[key][1];
+                    man[0] = myWorld[key][0]-v;
+                    man[1] = myWorld[key][1];
                     }
                 break
                 case 8:{
-                    man[0] = lud[key][0]-v;
-                    man[1] = lud[key][1]-v;
+                    man[0] = myWorld[key][0]-v;
+                    man[1] = myWorld[key][1]-v;
                     }
                 break
                 case 0:{
-                    man[0] = lud[key][0];
-                    man[1] = lud[key][1];
+                    man[0] = myWorld[key][0];
+                    man[1] = myWorld[key][1];
                     }
                 break
                 default:
@@ -114,7 +114,7 @@ window.onload = function () {
 
 //рендерим
         for (var key in myWorld) {
-            man=lud[key];
+            man=myWorld[key];
             drawMan(man);
             }
 
@@ -182,9 +182,7 @@ window.onload = function () {
     }
 //конец ядра
 
-    var myWorld = {
-        
-    };
+ 
 
     var lud = [
         [100,250,0,0,4,10,'gray'],
