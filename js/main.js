@@ -38,68 +38,68 @@ window.onload = function () {
 ///////  
     
 world = {
-    H: 200, 
-    W: 200,
+    H: 500, 
+    W: 500,
     Day: 3,
-    v: 5,
+    v: 1,
     lud: {x : 0,
           y : 0,
           r : 0,
           d : 0,
           c : 0}, 
-    calculate: function() {
+    calculate: function(step) {
    //смотрим направление и пересчитываем координаты
     for (var key in this.lud)   {
         man = this.lud[key];
         switch (man[3]) {
                 case 1:{
                     man[0] = this.lud[key][0];
-                    man[1] = this.lud[key][1]-v;
+                    man[1] = this.lud[key][1]-step;
                     if ((man[1]) < 0) {man[3] = 5; } //пересчитываем направление 
                     }
                 break
                 case 2:{
-                    man[0] = man[0]+v;
-                    man[1] = man[1]-v;
+                    man[0] = man[0]+step;
+                    man[1] = man[1]-step;
                     if ((man[1]) < 0) {man[3] = 4; }
                     if ((man[0]) > world.W) {man[3] = 8; }
                     }
                 break
                 case 3:{
-                    man[0] = man[0]+v;
+                    man[0] = man[0]+step;
                     man[1] = man[1];
                     if ((man[0]) > world.W) {man[3] = 7; }
                     }
                 break
                 case 4:{
-                    man[0] = man[0]+v;
-                    man[1] = man[1]+v;
+                    man[0] = man[0]+step;
+                    man[1] = man[1]+step;
                     if ((man[0]) > world.W) {man[3] = 6; }
                     if ((man[1]) > world.H) {man[3] = 2; }
                     }
                 break
                 case 5:{
                     man[0] = man[0];
-                    man[1] = man[1]+v;
+                    man[1] = man[1]+step;
                     if (man[1] > world.H){man[3] = 1;}
                     }
                     break
                 case 6:{
-                    man[0] = man[0]-v;
-                    man[1] = man[1]+v;
+                    man[0] = man[0]-step;
+                    man[1] = man[1]+step;
                     if ((man[0]) < 0) {man[3] = 4; }
                     if ((man[1]) > world.H) {man[3] = 8; }
                     }
                 break
                 case 7:{
-                    man[0] = man[0]-v;
+                    man[0] = man[0]-step;
                     man[1] = man[1];
                     if ((man[0]) < 0) {man[3] = 3; }
                     }
                 break
                 case 8:{
-                    man[0] = man[0]-v;
-                    man[1] = man[1]-v;
+                    man[0] = man[0]-step;
+                    man[1] = man[1]-step;
                     if ((man[0]) < 0) {man[3] = 2; }
                     if ((man[1]) < 0) {man[3] = 6; }
                     }
@@ -135,17 +135,23 @@ world.lud = [
     ]
 
 world.render();
-world.calculate();
+
+for (var i = 0; i < 1000; i++) {
+world.lud[i]=[(rand(1,world.W)),(rand(1,world.H)),(rand(1,2)),(rand(1,8)),'red'];
+    
+}
+//console.log(world.lud);
+//world.calculate();
 //console.log(man);
     function animate(myWorld, canvas, context, startTime) {
 
-        var time = (new Date()).getTime() - startTime;
+        var step = ((new Date()).getTime() - startTime)/1000;
            
         world.render();
-        world.calculate();
+        world.calculate(2);
 //world.clear();    
         // request new frame
-        //console.log(time);
+        //console.log(step);
     
         requestAnimFrame(function () {
             animate(myWorld, canvas, context, startTime);
@@ -156,6 +162,6 @@ world.calculate();
     }
 //конец ядра
 startTime = (new Date()).getTime();
-//animate(world, canvas, context, startTime);  
+animate(world, canvas, context, startTime);  
 
 };
