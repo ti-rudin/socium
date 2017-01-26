@@ -15,8 +15,8 @@ window.onload = function () {
 //переменные
     'use strict';
     var v = 2; //скорость пикселей/сек
-        canvas = document.getElementById('myCanvas'),
-        context = canvas.getContext('2d');
+  //      canvas = document.getElementById('myCanvas'),
+//        context = canvas.getContext('2d');
 
 //ядровые функции    
     
@@ -24,17 +24,36 @@ window.onload = function () {
         var x = man[0],
             y = man[1],
             radius = man[2],
+            id =  man[5],
             color = man[4];
-            
+//console.log(man);
+            //    console.log(id);
+if (id > 0) {
+        var 
+        d = document.getElementById(id);
+        
+        d.style.left = x;
+        d.style.top = y;
+        d.style.width='10px';
+        d.style.height='10px';
+        d.style.background=color;
+        d.style.position='absolute';
+        document.body.appendChild(d);
+}
 
-        context.beginPath();
-        context.arc(x, y, radius, 0, 2 * Math.PI, false);
-        context.fillStyle = color;
-        context.fill();
-        context.lineWidth = radius;
-        context.strokeStyle = 'black';
-        context.stroke();
+
+        
+        
+        //context.beginPath();
+        //context.arc(x, y, radius, 0, 2 * Math.PI, false);
+        //context.fillStyle = color;
+        //context.fill();
+        //context.lineWidth = radius;
+        //context.strokeStyle = 'black';
+        //context.stroke();
     }
+    
+    
 ///////  
     
 world = {
@@ -46,11 +65,14 @@ world = {
           y : 0,
           r : 0,
           d : 0,
-          c : 0}, 
+          c : 0,
+         id : 0}, 
     calculate: function(step) {
    //смотрим направление и пересчитываем координаты
     for (var key in this.lud)   {
         man = this.lud[key];
+        id = man [5];
+        if (id > 0) {
         switch (man[3]) {
                 case 1:{
                     man[0] = this.lud[key][0];
@@ -111,7 +133,7 @@ world = {
                 break
                 default:
             alert('1')
-            }
+            }}
       
 
     }
@@ -119,49 +141,62 @@ world = {
     //alert(this.Day + ', ' + this.lud[user][user]); 
     },
     render: function(){
-        context.clearRect(0, 0, canvas.width, canvas.height); //очищаем
+  //      context.clearRect(0, 0, canvas.width, canvas.height); //очищаем
   
     for (var key in this.lud)   {
         man = this.lud[key];
-        drawMan(man);}
+       // console.log(key);
+       drawMan(man)}
     },
-    clear : function(){context.clearRect(0, 0, canvas.width, canvas.height);}
+    createworld : function(){
+
+        for (var i = 0; i < 10; i++) {
+            world.lud[i]=[
+                (rand(1,world.W)),
+                (rand(1,world.H)),
+                (rand(1,2)),(rand(1,8)),
+                'red',i+1,];
+            l = document.createElement('div');
+            l.id = i+1;
+            document.body.appendChild(l);
+
+            
+    
+        }
+        
+        
+        
+    }
 }    
  
-world.lud = [
-        [10,10,7,4,'red'],
-        [20,250,4,2,'red'],
-        [150,130,10,3,'green'],  
-    ]
 
-world.render();
 
-for (var i = 0; i < 1000; i++) {
-world.lud[i]=[(rand(1,world.W)),(rand(1,world.H)),(rand(1,2)),(rand(1,8)),'red'];
-    
-}
-//console.log(world.lud);
-//world.calculate();
-//console.log(man);
-    function animate(myWorld, canvas, context, startTime) {
+    function animate(myWorld, startTime) {
 
-        var step = ((new Date()).getTime() - startTime)/1000;
+        var step = ((new Date()).getTime() - startTime)/1000+1;
            
         world.render();
         world.calculate(2);
-//world.clear();    
-        // request new frame
-        //console.log(step);
-    
+  
         requestAnimFrame(function () {
-            animate(myWorld, canvas, context, startTime);
+            animate(myWorld, startTime);
 
         });
 
 
     }
 //конец ядра
+    
+    
+
+world.createworld();
+    console.log(world);
+        world.render();
+     world.calculate(2);
+    console.log(world);
+ 
+    
 startTime = (new Date()).getTime();
-animate(world, canvas, context, startTime);  
+   setTimeout((animate(world,startTime)),1000);
 
 };
