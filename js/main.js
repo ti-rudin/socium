@@ -8,7 +8,7 @@ window.onload = function () {
     window.requestAnimFrame = (function (callback) {
         return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
             function (callback) {
-                window.setTimeout(callback, 1000/60);
+                window.setTimeout(callback, 1000/30);
             };
     }
                               )();
@@ -150,7 +150,7 @@ world = {
     },
     createworld : function(){
 
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 1000; i++) {
             world.lud[i]=[
                 (rand(1,world.W)),
                 (rand(1,world.H)),
@@ -176,7 +176,7 @@ world = {
         var step = ((new Date()).getTime() - startTime)/1000+1;
            
         world.render();
-        world.calculate(2);
+        world.calculate(3);
   
         requestAnimFrame(function () {
             animate(myWorld, startTime);
@@ -197,6 +197,6 @@ world.createworld();
  
     
 startTime = (new Date()).getTime();
-   setTimeout((animate(world,startTime)),1000);
+//   setTimeout((animate(world,startTime)),1000);
 
 };
