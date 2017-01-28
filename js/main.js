@@ -58,8 +58,8 @@ if (id > 0) {
         
         d.style.left = x;
         d.style.top = y;
-        d.style.width='3px';
-        d.style.height='3px';
+        d.style.width='10px';
+        d.style.height='10px';
         d.style.background=color;
         d.style.position='absolute';
         document.body.appendChild(d);
@@ -81,11 +81,11 @@ if (id > 0) {
 ///////  
     
 world = {
-    H: 100,
-    W: 100,
+    H: 400,
+    W: 400,
     Day: 3,
     v: 1,
-    population : 10,
+    population : 120,
     lud: {x : 0,
           y : 0,
           r : 0,
@@ -109,65 +109,108 @@ world = {
                 case 1:{
                     man[0] = this.lud[key][0];
                     man[1] = this.lud[key][1]-step;
-                    if ((man[1]) < 0) {man[3] = 5; } //пересчитываем направление, если стенка
+                    if ((man[1]) <= 0) {man[3] = 5; } //пересчитываем направление, если стенка
                     //пересчитываем направление, если столкновение
 //смотрим кто прямо по направлению, получаем массив ид
                     //смотрим координаты оппонентов
                     var xop = this.lud[key][0];
-                    var yop = this.lud[key][1]-step*2;
+                    var yop = this.lud[key][1];
                     //смотрим id оппонента
                     //console.log(xop,yop);
-                    var idop = world.plane[xop][yop];
+                    var idop = this.plane[xop][yop];
                     //console.log(idop);
-                    if (idop>0) { man[3] = 3;
-                    };
+                    if (idop>0) { man[3] = 2;};
 
                     }
                 break
                 case 2:{
                     man[0] = man[0]+step;
                     man[1] = man[1]-step;
-                    if ((man[1]) < 0) {man[3] = 4; }
-                    if ((man[0]) > world.W) {man[3] = 8; }
+                    if ((man[1]) <= 0) {man[3] = 4; }
+                    if ((man[0]) >= world.W) {man[3] = 8; }
+
+                    var xop = this.lud[key][0];
+                    var yop = this.lud[key][1];
+                    //смотрим id оппонента
+                    var idop = world.plane[xop][yop];
+                    if (idop>0) { man[3] = 3;};
+
                     }
                 break
                 case 3:{
                     man[0] = man[0]+step;
                     man[1] = man[1];
-                    if ((man[0]) > world.W) {man[3] = 7; }
+                    if ((man[0]) >= world.W) {man[3] = 7; }
+
+                    var xop = this.lud[key][0];
+                    var yop = this.lud[key][1];
+                    //смотрим id оппонента
+                    var idop = world.plane[xop][yop];
+                    if (idop>0) { man[3] = 4;};
                     }
                 break
                 case 4:{
                     man[0] = man[0]+step;
                     man[1] = man[1]+step;
-                    if ((man[0]) > world.W) {man[3] = 6; }
-                    if ((man[1]) > world.H) {man[3] = 2; }
+                    if ((man[0]) >= world.W) {man[3] = 6; }
+                    if ((man[1]) >= world.H) {man[3] = 2; }
+
+                    var xop = this.lud[key][0];
+                    var yop = this.lud[key][1];
+                    //смотрим id оппонента
+                    var idop = world.plane[xop][yop];
+                    if (idop>0) { man[3] = 5;};
                     }
                 break
                 case 5:{
                     man[0] = man[0];
                     man[1] = man[1]+step;
-                    if (man[1] > world.H){man[3] = 1;}
+                    if (man[1] >= world.H){man[3] = 1;}
+
+                    var xop = this.lud[key][0];
+                    var yop = this.lud[key][1];
+                    //смотрим id оппонента
+                    var idop = world.plane[xop][yop];
+                    if (idop>0) { man[3] = 6;};
+
                     }
                     break
                 case 6:{
                     man[0] = man[0]-step;
                     man[1] = man[1]+step;
-                    if ((man[0]) < 0) {man[3] = 4; }
-                    if ((man[1]) > world.H) {man[3] = 8; }
+                    if ((man[0]) <= 0) {man[3] = 4; }
+                    if ((man[1]) >= world.H) {man[3] = 8; }
+
+                    var xop = this.lud[key][0];
+                    var yop = this.lud[key][1];
+                    //смотрим id оппонента
+                    var idop = world.plane[xop][yop];
+                    if (idop>0) { man[3] = 7;};
                     }
                 break
                 case 7:{
                     man[0] = man[0]-step;
                     man[1] = man[1];
-                    if ((man[0]) < 0) {man[3] = 3; }
+                    if ((man[0]) <= 0) {man[3] = 3; }
+
+                    var xop = this.lud[key][0];
+                    var yop = this.lud[key][1];
+                    //смотрим id оппонента
+                    var idop = world.plane[xop][yop];
+                    if (idop>0) { man[3] = 8;};
                     }
                 break
                 case 8:{
                     man[0] = man[0]-step;
                     man[1] = man[1]-step;
-                    if ((man[0]) < 0) {man[3] = 2; }
-                    if ((man[1]) < 0) {man[3] = 6; }
+                    if ((man[0]) <= 0) {man[3] = 2; }
+                    if ((man[1]) <= 0) {man[3] = 6; }
+
+                    var xop = this.lud[key][0];
+                    var yop = this.lud[key][1];
+                    //смотрим id оппонента
+                    var idop = world.plane[xop][yop];
+                    if (idop>0) { man[3] = 1;};
                     }
                 break
                 case 0:{
@@ -202,10 +245,10 @@ world = {
         }
 
     //создаем популяцию на основе случайных величин
-        for (var i = 0; i < (this.population-1); i++) {
+        for (var i = 0; i < (this.population); i++) {
             world.lud[i]=[
-                (rand(1,world.W)),
-                (rand(1,world.H)),
+                (rand(20,world.W-20)),
+                (rand(20,world.H-20)),
                 (rand(1,2)),
                 (rand(1,8)),
                 'red',
