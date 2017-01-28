@@ -148,7 +148,7 @@ world.lud[i]=[(rand(1,world.W)),(rand(1,world.H)),(rand(1,2)),(rand(1,8)),'red']
         var step = ((new Date()).getTime() - startTime)/1000;
            
         world.render();
-        world.calculate(2);
+        world.calculate(1);
 //world.clear();    
         // request new frame
         //console.log(step);
