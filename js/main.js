@@ -58,8 +58,8 @@ if (id > 0) {
         
         d.style.left = x;
         d.style.top = y;
-        d.style.width='10px';
-        d.style.height='10px';
+        d.style.width='3px';
+        d.style.height='3px';
         d.style.background=color;
         d.style.position='absolute';
         document.body.appendChild(d);
@@ -266,31 +266,7 @@ world = {
         }
        // console.log(world.lud);
        //console.log(world.plane);
-        
-    },
-    transpon : function(){
-        //////////////
-    arr = this.lud;
-var ArrX = [];
-var ArrY = [];
 
-for(var i = 0; i < arr.length; i++){
-
-
-  for(var j = 0; j < arr[i].length; j++){
-    if(newArr.length <= j){
-      newArr.push([]);
-    }
-    newArr[j][i] = arr[i][j];
-  }
-}
-arr.splice(0, arr.length);
-for(var i = 0; i < newArr.length; i++){
-  arr.push(newArr[i])
-}
-        ///////////
-        
-        
     }
 }    
  
