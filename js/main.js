@@ -20,10 +20,25 @@ window.onload = function () {
 
 //ядровые функции    
     function watch(xop,yop){
+        var idopx = [];
+        var idopy = [];
+
+        if ((xop > 0)&(xop < world.W)) {
+            idopx = world.planeX[xop];
+        }
+        if ((yop > 0)&(yop < world.H)) {
+            idopy = world.planeY[yop];
+        }
+
         var idop = [];
-         for (var key in this.lud)   {
-        man = this.lud[key];
-        if ((man[0]=xop)&(man[1]=yop)) {idop.push(key)}
+         for (var key in idopx)   {
+             var stek = idop[key];
+
+             for (var key in idopy){
+                 if (idopy[key]=stek) {idop.push(stek)}
+             }
+
+
 
          }
         return idop
@@ -66,17 +81,18 @@ if (id > 0) {
 ///////  
     
 world = {
-    H: 10,
-    W: 10,
+    H: 100,
+    W: 100,
     Day: 3,
     v: 1,
-    population : 5,
+    population : 10,
     lud: {x : 0,
           y : 0,
           r : 0,
           d : 0,
           c : 0,
          id : 0},
+    plane : [],
     planeX : {},
     planeY : {},
     calculate: function(step) {
@@ -84,7 +100,7 @@ world = {
     for (var key in this.lud)   {
         man = this.lud[key];
 
-//смотрим кто рядом, получаем массив ид
+
 
 
         id = man [5];
@@ -95,14 +111,16 @@ world = {
                     man[1] = this.lud[key][1]-step;
                     if ((man[1]) < 0) {man[3] = 5; } //пересчитываем направление, если стенка
                     //пересчитываем направление, если столкновение
-
-                    //смотрим координаты оппонента
-                    xop = man[0];
-                    yop = man[1];
+//смотрим кто прямо по направлению, получаем массив ид
+                    //смотрим координаты оппонентов
+                    var xop = this.lud[key][0];
+                    var yop = this.lud[key][1]-step*2;
                     //смотрим id оппонента
-                    var idop = watch(xop,yop);
-                    console.log(xop,yop);
-                    if (idop!=0) {console.log(idop)};
+                    //console.log(xop,yop);
+                    var idop = world.plane[xop][yop];
+                    //console.log(idop);
+                    if (idop>0) { man[3] = 3;
+                    };
 
                     }
                 break
@@ -176,15 +194,15 @@ world = {
     },
     createworld : function(){
     //создаем пустое пространство
-        for (var i = 0; i < this.W; i++) {
-            this.planeX[i] = []
+        for (var i = 0; i <= this.W; i++) {
+            world.plane[i]=[];
+         for (var j = 0; j <= this.H; j++) {
+            world.plane[i][j] = [];
         }
-         for (var i = 0; i < this.H; i++) {
-            this.planeY[i] = [];
         }
 
     //создаем популяцию на основе случайных величин
-        for (var i = 0; i < this.population; i++) {
+        for (var i = 0; i < (this.population-1); i++) {
             world.lud[i]=[
                 (rand(1,world.W)),
                 (rand(1,world.H)),
@@ -197,15 +215,14 @@ world = {
             document.body.appendChild(l);
             px = world.lud[i][0];
             py = world.lud[i][1];
-            world.planeX[px].push(i);
-            world.planeY[py].push(i);
+            world.plane[px][py].push(i);
             //console.log(i,px,py,world.lud[i]);
             //console.log();
             
     
         }
        // console.log(world.lud);
-       // console.log(world.planeX,world.planeY);
+       //console.log(world.plane);
         
     },
     transpon : function(){
@@ -255,11 +272,15 @@ for(var i = 0; i < newArr.length; i++){
     
 
 world.createworld();
+ //   console.log(world.lud);
+   //     console.log(world.planeX,world.planeY);
+   // console.log(idop);
  //   console.log(world);
-        world.render();
-     world.calculate(1);
+    //    world.render();
+  //   world.calculate(1);
    // console.log(world);
- 
+  //console.log(world.lud);
+  //      console.log(world.planeX,world.planeY);
     
 startTime = (new Date()).getTime();
    setTimeout((animate(world,startTime)),1000);
