@@ -81,11 +81,11 @@ if (id > 0) {
 ///////  
     
 world = {
-    H: 400,
-    W: 400,
+    H: 100,
+    W: 100,
     Day: 3,
     v: 1,
-    population : 120,
+    population : 400,
     lud: {x : 0,
           y : 0,
           r : 0,
@@ -120,6 +120,9 @@ world = {
                     var idop = this.plane[xop][yop];
                     //console.log(idop);
                     if (idop>0) { man[3] = 2;};
+
+                    //а plain то мы забыли пересчитать! из-за этого-то и виснет иногда
+
 
                     }
                 break
@@ -237,9 +240,9 @@ world = {
     },
     createworld : function(){
     //создаем пустое пространство
-        for (var i = 0; i <= this.W; i++) {
+        for (var i = 0; i <= this.W+1; i++) {
             world.plane[i]=[];
-         for (var j = 0; j <= this.H; j++) {
+         for (var j = 0; j <= this.H+1; j++) {
             world.plane[i][j] = [];
         }
         }
@@ -277,20 +280,9 @@ world = {
         var step = ((new Date()).getTime() - startTime)/1000+1;
            
         world.render();
-<<<<<<< develop
-<<<<<<< develop
-        world.calculate(2);
-//world.clear();    
-        // request new frame
-        //console.log(step);
-    
-=======
-        world.calculate(3);
-=======
+
         world.calculate(1);
->>>>>>> проекции пространства
-  
->>>>>>> 12
+
         requestAnimFrame(function () {
             animate(myWorld, startTime);
 
