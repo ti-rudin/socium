@@ -58,8 +58,8 @@ if (id > 0) {
         
         d.style.left = x;
         d.style.top = y;
-        d.style.width='3px';
-        d.style.height='3px';
+        d.style.width='5px';
+        d.style.height='5px';
         d.style.background=color;
         d.style.position='absolute';
         document.body.appendChild(d);
@@ -81,11 +81,11 @@ if (id > 0) {
 ///////  
     
 world = {
-    H: 100,
-    W: 100,
+    H: 300,
+    W: 300,
     Day: 3,
     v: 1,
-    population : 400,
+    population : 100,
     lud: {x : 0,
           y : 0,
           r : 0,
@@ -107,17 +107,22 @@ world = {
         if (id > 0) {
         switch (man[3]) {
                 case 1:{
+                    //смотрим координаты оппонентов
+                    var xop = this.lud[key][0];
+                    var yop = this.lud[key][1];
+                    var idop = this.plane[xop][yop]; //получаем массив с оппонентами
+
+                    //пересчитываем коодинаты
                     man[0] = this.lud[key][0];
                     man[1] = this.lud[key][1]-step;
                     if ((man[1]) <= 0) {man[3] = 5; } //пересчитываем направление, если стенка
                     //пересчитываем направление, если столкновение
 //смотрим кто прямо по направлению, получаем массив ид
-                    //смотрим координаты оппонентов
-                    var xop = this.lud[key][0];
-                    var yop = this.lud[key][1];
+
+
                     //смотрим id оппонента
                     //console.log(xop,yop);
-                    var idop = this.plane[xop][yop];
+
                     //console.log(idop);
                     if (idop>0) { man[3] = 2;};
 
