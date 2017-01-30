@@ -18,7 +18,26 @@ window.onload = function () {
   //      canvas = document.getElementById('myCanvas'),
 //        context = canvas.getContext('2d');
 
-//ядровые функции    
+//ядровые функции   
+    function find(arr, value) {
+	   var last = arr[arr.length - 1];
+			
+	   arr[arr.length - 1] = value;
+			
+	   var i = 0;
+			
+	   while(arr[i] !== value) {
+           i++;
+	   }
+			
+	   arr[arr.length - 1] = last;
+			
+	   if(i < arr.length - 1 || arr[arr.length - 1] === value)
+           return i;
+	   else
+           return -1;
+    }
+    
     function watch(xop,yop){
         var idopx = [];
         var idopy = [];
@@ -96,50 +115,62 @@ world = {
     plane2: [],
     planeX : {},
     planeY : {},
-    calculate: function(step) {
-//смотрим направление и пересчитываем координаты
-    for (var key in this.lud)   {
-        man = this.lud[key];
+    calculate: function() {
+    //перебираем всех по очереди
+        
 
 
+        
+for (var keyC = 0; keyC <= world.population-1; keyC++) {
 
-
-        id = man [5];
-        if (id > 0) {
+        var man = this.lud[keyC];
+        xmy = man[0];
+        ymy = man[1];
+        idmy = this.plane[xmy][ymy]; //получаем массив своей ячейки в plane
+        
+        var id = man [5];
+       // console.log(id,xmy,ymy,idmy,man[3]);
+    //смотрим направление и калькулируем
         switch (man[3]) {
                 case 1:{
-                    //смотрим координаты оппонентов
-                    var xop = this.lud[key][0];
-                    var yop = this.lud[key][1];
-                    var idop = this.plane[xop][yop]; //получаем массив с оппонентами
+                    //смотрим свои координаты за вычетом шага и проверяем не уперлись ли мы в стенку
+                    if ((ymy-1) <= 0) {
+                        //если уперлись, то просто меняем направление
+                        man[3] = 5; 
 
-                    //пересчитываем коодинаты
-                    man[0] = this.lud[key][0];
-                    man[1] = this.lud[key][1]-step;
-                    if ((man[1]) <= 0) {man[3] = 5; } //пересчитываем направление, если стенка
-                    //пересчитываем направление, если столкновение
-//смотрим кто прямо по направлению, получаем массив ид
+                    } else {
+                        //иначе
+                            var idop = this.plane[xmy][ymy-1]; //получаем массив с оппонентами
+                            if (idop>0) { 
+                                //если массив с оппонентами не пустой, то просто меняем направление
+                                man[3] = 2; } else {
+                                   
+                                        //записываем в следующую ячейку plane свой id
+                                    world.plane[xmy][ymy-1].push(id);
+                                    world.plane[xmy][ymy]=[];
+                                 //   console.log(id);
+                                 //   console.log((this.plane[xmy][ymy]),(this.plane[xmy][ymy-1]),man[1]);    
 
-
-                    //смотрим id оппонента
-                    //console.log(xop,yop);
-
-                    //console.log(idop);
-                    if (idop>0) { man[3] = 2;};
-
-                    //а plain то мы забыли пересчитать! из-за этого-то и виснет иногда
-
+                                        //пересчитываем коодинаты
+                                    man[0] = this.lud[keyC][0];
+                                    man[1] = this.lud[keyC][1]-1;
+                        
+                                }
+                    }
+                   
+                    
+                     
 
                     }
                 break
                 case 2:{
-                    man[0] = man[0]+step;
-                    man[1] = man[1]-step;
+                    man[0] = man[0]+1;
+                    man[1] = man[1]-1;
                     if ((man[1]) <= 0) {man[3] = 4; }
                     if ((man[0]) >= world.W) {man[3] = 8; }
 
-                    var xop = this.lud[key][0];
-                    var yop = this.lud[key][1];
+                    var xop = this.lud[keyC][0];
+                    var yop = this.lud[keyC][1];
                     //смотрим id оппонента
                     var idop = world.plane[xop][yop];
                     if (idop>0) { man[3] = 3;};
@@ -147,25 +178,25 @@ world = {
                     }
                 break
                 case 3:{
-                    man[0] = man[0]+step;
+                    man[0] = man[0]+1;
                     man[1] = man[1];
                     if ((man[0]) >= world.W) {man[3] = 7; }
 
-                    var xop = this.lud[key][0];
-                    var yop = this.lud[key][1];
+                    var xop = this.lud[keyC][0];
+                    var yop = this.lud[keyC][1];
                     //смотрим id оппонента
                     var idop = world.plane[xop][yop];
                     if (idop>0) { man[3] = 4;};
                     }
                 break
                 case 4:{
-                    man[0] = man[0]+step;
-                    man[1] = man[1]+step;
+                    man[0] = man[0]+1;
+                    man[1] = man[1]+1;
                     if ((man[0]) >= world.W) {man[3] = 6; }
                     if ((man[1]) >= world.H) {man[3] = 2; }
 
-                    var xop = this.lud[key][0];
-                    var yop = this.lud[key][1];
+                    var xop = this.lud[keyC][0];
+                    var yop = this.lud[keyC][1];
                     //смотрим id оппонента
                     var idop = world.plane[xop][yop];
                     if (idop>0) { man[3] = 5;};
@@ -173,11 +204,11 @@ world = {
                 break
                 case 5:{
                     man[0] = man[0];
-                    man[1] = man[1]+step;
+                    man[1] = man[1]+1;
                     if (man[1] >= world.H){man[3] = 1;}
 
-                    var xop = this.lud[key][0];
-                    var yop = this.lud[key][1];
+                    var xop = this.lud[keyC][0];
+                    var yop = this.lud[keyC][1];
                     //смотрим id оппонента
                     var idop = world.plane[xop][yop];
                     if (idop>0) { man[3] = 6;};
@@ -185,38 +216,38 @@ world = {
                     }
                     break
                 case 6:{
-                    man[0] = man[0]-step;
-                    man[1] = man[1]+step;
+                    man[0] = man[0]-1;
+                    man[1] = man[1]+1;
                     if ((man[0]) <= 0) {man[3] = 4; }
                     if ((man[1]) >= world.H) {man[3] = 8; }
 
-                    var xop = this.lud[key][0];
-                    var yop = this.lud[key][1];
+                    var xop = this.lud[keyC][0];
+                    var yop = this.lud[keyC][1];
                     //смотрим id оппонента
                     var idop = world.plane[xop][yop];
                     if (idop>0) { man[3] = 7;};
                     }
                 break
                 case 7:{
-                    man[0] = man[0]-step;
+                    man[0] = man[0]-1;
                     man[1] = man[1];
                     if ((man[0]) <= 0) {man[3] = 3; }
 
-                    var xop = this.lud[key][0];
-                    var yop = this.lud[key][1];
+                    var xop = this.lud[keyC][0];
+                    var yop = this.lud[keyC][1];
                     //смотрим id оппонента
                     var idop = world.plane[xop][yop];
                     if (idop>0) { man[3] = 8;};
                     }
                 break
                 case 8:{
-                    man[0] = man[0]-step;
-                    man[1] = man[1]-step;
+                    man[0] = man[0]-1;
+                    man[1] = man[1]-1;
                     if ((man[0]) <= 0) {man[3] = 2; }
                     if ((man[1]) <= 0) {man[3] = 6; }
 
-                    var xop = this.lud[key][0];
-                    var yop = this.lud[key][1];
+                    var xop = this.lud[keyC][0];
+                    var yop = this.lud[keyC][1];
                     //смотрим id оппонента
                     var idop = world.plane[xop][yop];
                     if (idop>0) { man[3] = 1;};
@@ -229,7 +260,7 @@ world = {
                 break
                 default:
             alert('1')
-            }}
+            }
       
 
     }
@@ -268,7 +299,7 @@ world = {
             document.body.appendChild(l);
             px = world.lud[i][0];
             py = world.lud[i][1];
-            world.plane[px][py].push(i);
+            world.plane[px][py].push(i+1);
             //console.log(i,px,py,world.lud[i]);
             //console.log();
             
@@ -289,7 +320,7 @@ world = {
            
         world.render();
 
-        world.calculate(1);
+        world.calculate();
 
         requestAnimFrame(function () {
             animate(myWorld, startTime);
@@ -303,15 +334,7 @@ world = {
     
 
 world.createworld();
- //   console.log(world.lud);
-   //     console.log(world.planeX,world.planeY);
-   // console.log(idop);
- //   console.log(world);
-    //    world.render();
-  //   world.calculate(1);
-   // console.log(world);
-  //console.log(world.lud);
-  //      console.log(world.planeX,world.planeY);
+
     
 startTime = (new Date()).getTime();
    setTimeout((animate(world,startTime)),1000);
