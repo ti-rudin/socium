@@ -18,7 +18,10 @@ window.onload = function () {
   //      canvas = document.getElementById('myCanvas'),
 //        context = canvas.getContext('2d');
 
-//ядровые функции   
+//ядровые функции 
+    function inarr(value) {
+        return value;
+    }
     function find(arr, value) {
 	   var last = arr[arr.length - 1];
 			
@@ -137,43 +140,45 @@ for (var keyC = 0; keyC <= world.population-1; keyC++) {
                     if ((ymy-1) <= 0) {
                         //если уперлись, то просто меняем направление
                         man[3] = 5; 
-
                     } else {
                         //иначе
                             var idop = this.plane[xmy][ymy-1]; //получаем массив с оппонентами
                             if (idop>0) { 
-                                //если массив с оппонентами не пустой, то просто меняем направление
-                                man[3] = 2; } else {
-                                   
-                                        //записываем в следующую ячейку plane свой id
+                                    //если массив с оппонентами не пустой, то просто меняем направление
+                                    man[3] = 2; } else {
+                                    //записываем в следующую ячейку plane свой id
                                     world.plane[xmy][ymy-1].push(id);
                                     world.plane[xmy][ymy]=[];
-                                 //   console.log(id);
-                                 //   console.log((this.plane[xmy][ymy]),(this.plane[xmy][ymy-1]),man[1]);    
-
-                                        //пересчитываем коодинаты
+                                    //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0];
                                     man[1] = this.lud[keyC][1]-1;
-                        
                                 }
-                    }
+                        }
                    
-                    
-                     
-
                     }
                 break
                 case 2:{
-                    man[0] = man[0]+1;
-                    man[1] = man[1]-1;
-                    if ((man[1]) <= 0) {man[3] = 4; }
-                    if ((man[0]) >= world.W) {man[3] = 8; }
-
-                    var xop = this.lud[keyC][0];
-                    var yop = this.lud[keyC][1];
-                    //смотрим id оппонента
-                    var idop = world.plane[xop][yop];
-                    if (idop>0) { man[3] = 3;};
+                    //смотрим свои координаты за вычетом шага и проверяем не уперлись ли мы в стенку
+                    if ((ymy-1) <= 0) {
+                        //если уперлись, то просто меняем направление
+                        man[3] = 4; }
+                    else if ((xmy+1) >= world.W){
+                        man[3] = 8;}
+                    else {
+                        //иначе
+                            var idop = this.plane[xmy+1][ymy-1]; //получаем массив с оппонентами
+                            if (idop>0) { 
+                                    //если массив с оппонентами не пустой, то просто меняем направление
+                                    man[3] = 3; } else {
+                                    //записываем в следующую ячейку plane свой id
+                                    world.plane[xmy+1][ymy-1].push(id);
+                                    world.plane[xmy][ymy]=[];
+                                    //пересчитываем коодинаты
+                                    man[0] = this.lud[keyC][0]+1;
+                                    man[1] = this.lud[keyC][1]-1;
+                                }
+                        }
+                   
 
                     }
                 break
@@ -306,6 +311,7 @@ for (var keyC = 0; keyC <= world.population-1; keyC++) {
     
         }
         world.lud[0][4]='red'; //метим первого красным цветом
+        world.lud[0][3]=1;
        // console.log(world.lud);
        //console.log(world.plane);
 
