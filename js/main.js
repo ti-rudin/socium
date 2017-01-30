@@ -93,6 +93,7 @@ world = {
           c : 0,
          id : 0},
     plane : [],
+    plane2: [],
     planeX : {},
     planeY : {},
     calculate: function(step) {
@@ -259,8 +260,9 @@ world = {
                 (rand(20,world.H-20)),
                 (rand(1,2)),
                 (rand(1,8)),
-                'red',
+                'black',
                 i+1];
+            
             l = document.createElement('div');
             l.id = i+1;
             document.body.appendChild(l);
@@ -272,6 +274,7 @@ world = {
             
     
         }
+        world.lud[0][4]='red'; //метим первого красным цветом
        // console.log(world.lud);
        //console.log(world.plane);
 
