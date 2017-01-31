@@ -79,10 +79,10 @@ if (id > 0) {
         var 
         d = document.getElementById(id);
         
-        d.style.left = x;
-        d.style.top = y;
-        d.style.width='1px';
-        d.style.height='1px';
+        d.style.left = x*11;
+        d.style.top = y*11;
+        d.style.width='10px';
+        d.style.height='10px';
         d.style.background=color;
         d.style.position='absolute';
         document.body.appendChild(d);
@@ -104,11 +104,11 @@ if (id > 0) {
 ///////  
     
 world = {
-    H: 50,
-    W: 50,
+    H: 40,
+    W: 40,
     Day: 3,
     v: 1,
-    population : 3,
+    population : 100,
     lud: {x : 0,
           y : 0,
           r : 0,
