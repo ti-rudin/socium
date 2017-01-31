@@ -10,13 +10,16 @@
 <div id="monitor">
     <button>Следующий кадр</button><br><br>
 
-    ID в фокусе: <a id="mon_id">0</a>
+    ID в фокусе: <a id="mon_id"></a><br>
+    Кто по курсу: <a id="mon_idop"></a><br>
 </div>
     <script>
   var button = document.querySelector("button");
   button.addEventListener("click", function() {
-   world.render();
-  world.calculate();
+    world.render();
+    world.calculate();
+    world.monitorman(1);
+console.log(world.plane);
   });
 </script>
 </body>

@@ -109,11 +109,11 @@ if (id > 0) {
 ///////  
     
 world = {
-    H: 40,
-    W: 40,
+    H: 20,
+    W: 20,
     Day: 3,
     v: 1,
-    population : 10,
+    population : 5,
     lud: {x : 1,
           y : 1,
           r : 1,
@@ -125,7 +125,7 @@ world = {
     calculate: function() {
     //перебираем всех по очереди
 
-    for (var keyC = 0; keyC <= world.population-1; keyC++) {
+    for (var keyC = 0; keyC < world.population-1; keyC++) {
 
         var man = this.lud[keyC];
         xmy = man[0];
@@ -149,7 +149,7 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = 2; } else {
                                     //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy][ymy-1].push(id);
+                                    world.plane[xmy][ymy-1]=id;
                                     //выписываем свой id из текущей ячейки plant (ща пока зачищаем просто)
                                     world.plane[xmy][ymy]=[];
                                    //пересчитываем коодинаты
@@ -173,7 +173,7 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = 3; } else {
                                     //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy+1][ymy-1].push(id);
+                                    world.plane[xmy+1][ymy-1]=id;
                                     world.plane[xmy][ymy]=[];//фильтр
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]+1;
@@ -193,7 +193,7 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = 4; } else {
                                     //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy+1][ymy].push(id);
+                                    world.plane[xmy+1][ymy]=id;
                                     world.plane[xmy][ymy]=[];//фильтр
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]+1;
@@ -215,7 +215,7 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = 5; } else {
                                     //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy+1][ymy+1].push(id);
+                                    world.plane[xmy+1][ymy+1]=id;
                                     world.plane[xmy][ymy]=[];//фильтр
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]+1;
@@ -235,7 +235,7 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = 6; } else {
                                     //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy][ymy+1].push(id);
+                                    world.plane[xmy][ymy+1]=id;
                                     world.plane[xmy][ymy]=[];//фильтр
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0];
@@ -257,7 +257,7 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = 7; } else {
                                     //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy-1][ymy+1].push(id);
+                                    world.plane[xmy-1][ymy+1]=id;
                                     world.plane[xmy][ymy]=[];//фильтр
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]-1;
@@ -277,7 +277,7 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = 8; } else {
                                     //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy+1][ymy].push(id);
+                                    world.plane[xmy+1][ymy]=id;
                                     world.plane[xmy][ymy]=[];//фильтр
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]-1;
@@ -299,7 +299,7 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = 1; } else {
                                     //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy-1][ymy-1].push(id);
+                                    world.plane[xmy-1][ymy-1]=id;
                                     world.plane[xmy][ymy]=[];//фильтр
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]-1;
@@ -333,6 +333,20 @@ world = {
 
     }
     },
+    monitorman: function(idmon){
+        var
+        q = document.getElementById('mon_id');
+        q.innerHTML=idmon;
+        document.body.appendChild(q);
+        q2 = document.getElementById('mon_idop');
+        var x,y;
+        x=world.lud[idmon][0];
+        y=world.lud[idmon][1];
+        q2.innerHTML=world.plane[x][y];
+        //q2.style.position=relative;
+        document.body.appendChild(q2);
+
+    },
     createworld : function(){
     //создаем пустое пространство
         for (var i = 0; i <= this.W+1; i++) {
@@ -343,7 +357,7 @@ world = {
         }
 
     //создаем популяцию на основе случайных величин
-        for (var i = 0; i < (this.population); i++) {
+        for (var i = 0; i < (this.population-1); i++) {
             world.lud[i]=[
                 (rand(20,world.W-20)),
                 (rand(20,world.H-20)),
@@ -357,7 +371,7 @@ world = {
             document.body.appendChild(l);
             px = world.lud[i][0];
             py = world.lud[i][1];
-            world.plane[px][py].push(i+1);
+            world.plane[px][py]=l.id;
             //console.log(i,px,py,world.lud[i]);
             //console.log();
             
@@ -372,11 +386,7 @@ world = {
 }    
  
 
-nexti=1;
-function next(nexti){
-    nexti=1;
 
-}
 
     function animate(myWorld, startTime) {
 
@@ -405,6 +415,6 @@ world.createworld();
 
     
 startTime = (new Date()).getTime();
-   setTimeout((animate(world,startTime)),1000);
+//   setTimeout((animate(world,startTime)),1000);
 
 };

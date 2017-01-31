@@ -3,11 +3,20 @@
     border-bottom-style: dotted;
 }
 #monitor {
-    position: absolute;
+    position: relative;
     left: 500px;
     font-size: 10px;
     color: black;
 }
-#mon_id {
-    padding: 3px;
+#mon_id{
+    position:absolute;
+    font-size: 12px;
+    left: 570px;
+    top : 40px;
+}
+#mon_idop{
+    position: absolute;
+    font-size: 12px;
+    left: 570px;
+    top : 55px;
 }
