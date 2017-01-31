@@ -7,6 +7,16 @@
 <body>
 
 <div id="myCanvas" width="800" height="600"></div>
+<div id="monitor">
+    <button>Следующий кадр</button><br><br>
 
+    ID в фокусе: <a id="mon_id">0</a>
+</div>
+    <script>
+  var button = document.querySelector("button");
+  button.addEventListener("click", function() {
+    console.log("Кнопка нажата.");
+  });
+</script>
 </body>
 </html>

@@ -2,3 +2,12 @@
     border: 2px;
     border-bottom-style: dotted;
 }
+#monitor {
+    position: absolute;
+    left: 500px;
+    font-size: 10px;
+    color: black;
+}
+#mon_id {
+    padding: 3px;
+}

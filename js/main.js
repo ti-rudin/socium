@@ -88,6 +88,8 @@ if (id > 0) {
         d.innerHTML=id;
         d.style.fontSize='10px';
         d.style.color='white';
+        d.style.border=1;
+        d.style.borderColor='green';
         document.body.appendChild(d);
 }
 
@@ -112,12 +114,12 @@ world = {
     Day: 3,
     v: 1,
     population : 10,
-    lud: {x : 0,
-          y : 0,
-          r : 0,
-          d : 0,
-          c : 0,
-         id : 0},
+    lud: {x : 1,
+          y : 1,
+          r : 1,
+          d : 1,
+          c : 1,
+         id : 1},
     plane : [],
     plane2: [],
     calculate: function() {
@@ -133,6 +135,7 @@ world = {
         id = man[5];
        // console.log(id,xmy,ymy,idmy,man[3]);
     //смотрим направление и калькулируем
+
         switch (man[3]) {
                 case 1:{
                     //смотрим свои координаты с учетом шага и проверяем не уперлись ли мы в стенку
@@ -327,6 +330,7 @@ world = {
        // console.log(key);
        drawMan(man);
 
+
     }
     },
     createworld : function(){
@@ -368,14 +372,23 @@ world = {
 }    
  
 
+nexti=1;
+function next(nexti){
+    nexti=1;
+
+}
 
     function animate(myWorld, startTime) {
 
         var step = ((new Date()).getTime() - startTime)/1000+1;
-           
-        world.render();
 
-        world.calculate();
+
+           // world.render();
+
+           // world.calculate();
+
+
+
 
         requestAnimFrame(function () {
             animate(myWorld, startTime);
