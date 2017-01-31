@@ -79,8 +79,8 @@ if (id > 0) {
         var 
         d = document.getElementById(id);
         
-        d.style.left = x*11;
-        d.style.top = y*11;
+        d.style.left = y*11;
+        d.style.top = x*11;
         d.style.width='10px';
         d.style.height='10px';
         d.style.background=color;
@@ -109,8 +109,8 @@ if (id > 0) {
 ///////  
     
 world = {
-    H: 20,
-    W: 20,
+    H: 10,
+    W: 10,
     Day: 3,
     v: 1,
     population : 5,
@@ -139,7 +139,7 @@ world = {
         switch (man[3]) {
                 case 1:{
                     //смотрим свои координаты с учетом шага и проверяем не уперлись ли мы в стенку
-                    if ((ymy-1) <= 0) {
+                    if ((ymy-1) < 0) {
                         //если уперлись, то просто меняем направление
                         man[3] = 5; 
                     } else {
@@ -334,33 +334,70 @@ world = {
     }
     },
     monitorman: function(idmon){
+
         var
         q = document.getElementById('mon_id');
         q.innerHTML=idmon;
+
         document.body.appendChild(q);
         q2 = document.getElementById('mon_idop');
         var x,y;
-        x=world.lud[idmon][0];
-        y=world.lud[idmon][1];
+        x=world.lud[(idmon-1)][0];
+        y=world.lud[(idmon-1)][1];
         q2.innerHTML=world.plane[x][y];
         //q2.style.position=relative;
         document.body.appendChild(q2);
 
+        /////////////////////
+        var container = document.getElementById('container');
+
+        container.innerHTML='';
+
+        var table = document.createElement('table');
+    var tbody = document.createElement('tbody');
+        //tbody.style.border=1;
+    // loop array
+    for (i = 0; i < world.W; i++) {
+        // get inner array
+        var vals = world.plane[i];
+        // create tr element
+        var row = document.createElement('tr');
+        // loop inner array
+        for (var b = 0; b < world.H; b++) {
+            // create td element
+            var cell = document.createElement('td');
+            // set text
+            cell.style.border='1';
+            cell.textContent = vals[b];
+            // append td to tr
+            row.appendChild(cell);
+        }
+        //append tr to tbody
+        tbody.appendChild(row);
+    }
+
+    // append tbody to table
+    table.appendChild(tbody);
+    // append table to container
+    container.appendChild(table);
+
+        /////////////////////
+
     },
     createworld : function(){
     //создаем пустое пространство
-        for (var i = 0; i <= this.W+1; i++) {
+        for (var i = 0; i < this.W; i++) {
             world.plane[i]=[];
-         for (var j = 0; j <= this.H+1; j++) {
-            world.plane[i][j] = [];
+         for (var j = 0; j < this.H; j++) {
+            world.plane[i][j] = [0];
         }
         }
 
     //создаем популяцию на основе случайных величин
-        for (var i = 0; i < (this.population-1); i++) {
+        for (var i = 0; i < (this.population); i++) {
             world.lud[i]=[
-                (rand(20,world.W-20)),
-                (rand(20,world.H-20)),
+                (rand(1,world.W-1)),
+                (rand(1,world.H-1)),
                 (rand(1,2)),
                 (rand(1,8)),
                 'black',
