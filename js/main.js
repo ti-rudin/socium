@@ -85,6 +85,9 @@ if (id > 0) {
         d.style.height='10px';
         d.style.background=color;
         d.style.position='absolute';
+        d.innerHTML=id;
+        d.style.fontSize='10px';
+        d.style.color='white';
         document.body.appendChild(d);
 }
 
@@ -108,7 +111,7 @@ world = {
     W: 40,
     Day: 3,
     v: 1,
-    population : 100,
+    population : 10,
     lud: {x : 0,
           y : 0,
           r : 0,
@@ -117,15 +120,10 @@ world = {
          id : 0},
     plane : [],
     plane2: [],
-    planeX : {},
-    planeY : {},
     calculate: function() {
     //перебираем всех по очереди
-        
 
-
-        
-for (var keyC = 0; keyC <= world.population-1; keyC++) {
+    for (var keyC = 0; keyC <= world.population-1; keyC++) {
 
         var man = this.lud[keyC];
         xmy = man[0];
