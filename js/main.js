@@ -79,10 +79,10 @@ if (id > 0) {
         var 
         d = document.getElementById(id);
         
-        d.style.left = y*2;
-        d.style.top = x*2;
-        d.style.width='10px';
-        d.style.height='10px';
+        d.style.left = y*10;
+        d.style.top = x*10;
+        d.style.width='9px';
+        d.style.height='9px';
         d.style.background=color;
         d.style.position='absolute';
        // d.innerHTML=id;
@@ -104,16 +104,21 @@ if (id > 0) {
         //context.strokeStyle = 'black';
         //context.stroke();
     }
-    
+    function animate(myWorld, startTime) {
+        var step = ((new Date()).getTime() - startTime)/1000+1;
+            world.render();
+            world.calculate();
+            setTimeout((function () {animate(myWorld, startTime); }),5);
+    }
     
 ///////  
     
 world = {
-    H: 270,
-    W: 230,
+    H: 30,
+    W: 30,
     Day: 3,
     v: 1,
-    population : 500,
+    population : 200,
     lud: {x : 1,
           y : 1,
           r : 1,
@@ -136,7 +141,7 @@ world = {
        // console.log(id,xmy,ymy,idmy,man[3]);
     //смотрим направление и калькулируем
 
-        switch (man[3]) {
+    switch (man[3]) {
                 case 1:{
                     //смотрим свои координаты с учетом шага и проверяем не уперлись ли мы в стенку
                     if ((ymy-1) < 0) {
@@ -148,13 +153,11 @@ world = {
                             if (idop>0) { 
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
-                                    //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy][ymy-1]=idmy;
-                                    //выписываем свой id из текущей ячейки plant (ща пока зачищаем просто)
-                                    world.plane[xmy][ymy]=[0];
+
                                    //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0];
                                     man[1] = this.lud[keyC][1]-1;
+
                                 }
                         }
                    
@@ -172,9 +175,6 @@ world = {
                             if (idop>0) { 
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
-                                    //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy+1][ymy-1]=idmy;
-                                    world.plane[xmy][ymy]=[0];//фильтр
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1]-1;
@@ -192,9 +192,6 @@ world = {
                             if (idop>0) {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
-                                    //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy+1][ymy]=idmy;
-                                    world.plane[xmy][ymy]=[0];//фильтр
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1];
@@ -214,9 +211,6 @@ world = {
                             if (idop>0) {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
-                                    //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy+1][ymy+1]=idmy;
-                                    world.plane[xmy][ymy]=[0];//фильтр
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1]+1;
@@ -234,9 +228,7 @@ world = {
                             if (idop>0) {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
-                                    //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy][ymy+1]=idmy;
-                                    world.plane[xmy][ymy]=[0];//фильтр
+
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0];
                                     man[1] = this.lud[keyC][1]+1;
@@ -256,9 +248,6 @@ world = {
                             if (idop>0) {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
-                                    //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy-1][ymy+1]=idmy;
-                                    world.plane[xmy][ymy]=[0];//фильтр
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1]+1;
@@ -276,10 +265,7 @@ world = {
                             if (idop>0) {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = 8; } else {
-                                    //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy-1][ymy]=idmy;
-                                    world.plane[xmy][ymy]=[0];//фильтр
-                                    //пересчитываем коодинаты
+                                        //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1];
                                 }
@@ -298,9 +284,6 @@ world = {
                             if (idop>0) {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = 1; } else {
-                                    //записываем в следующую ячейку plane свой id
-                                    world.plane[xmy-1][ymy-1]=idmy;
-                                    world.plane[xmy][ymy]=[0];//фильтр
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1]-1;
@@ -316,11 +299,20 @@ world = {
                 default:
             alert('1')
             }
-      
+        world.plane[xmy][ymy]=0;
+
+
 
     }
         
-    //alert(this.Day + ', ' + this.lud[user][user]); 
+    //перебираем всех по очереди
+    for (var i = 0; i < world.population; i++) {
+            var px = world.lud[i][0];
+            var py = world.lud[i][1];
+            world.plane[px][py]=i;
+
+    }
+
     },
     render: function(){
   //      context.clearRect(0, 0, canvas.width, canvas.height); //очищаем
@@ -400,7 +392,7 @@ world = {
                 (rand(1,world.H-1)),
                 (rand(1,2)),
                 (rand(1,8)),
-                'gray',
+                'rgba(0, 0, 255, 0.26)',
                 i+1];
             
             l = document.createElement('div');
@@ -425,27 +417,6 @@ world = {
 }    
  
 
-
-
-    function animate(myWorld, startTime) {
-
-        var step = ((new Date()).getTime() - startTime)/1000+1;
-
-
-            world.render();
-
-            world.calculate();
-
-
-
-
-        requestAnimFrame(function () {
-            animate(myWorld, startTime);
-
-        });
-
-
-    }
 //конец ядра
     
     
@@ -454,6 +425,6 @@ world.createworld();
 
     
 startTime = (new Date()).getTime();
-   setTimeout((animate(world,startTime)),1000);
+animate(world,startTime);
 
 };
