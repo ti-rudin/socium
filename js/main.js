@@ -79,10 +79,10 @@ if (id > 0) {
         var 
         d = document.getElementById(id);
         
-        d.style.left = y*7;
-        d.style.top = x*7;
-        d.style.width='6px';
-        d.style.height='6px';
+        d.style.left = y*2;
+        d.style.top = x*2;
+        d.style.width='10px';
+        d.style.height='10px';
         d.style.background=color;
         d.style.position='absolute';
        // d.innerHTML=id;
@@ -109,11 +109,11 @@ if (id > 0) {
 ///////  
     
 world = {
-    H: 80,
-    W: 80,
+    H: 270,
+    W: 230,
     Day: 3,
     v: 1,
-    population : 1000,
+    population : 500,
     lud: {x : 1,
           y : 1,
           r : 1,
@@ -400,7 +400,7 @@ world = {
                 (rand(1,world.H-1)),
                 (rand(1,2)),
                 (rand(1,8)),
-                'black',
+                'gray',
                 i+1];
             
             l = document.createElement('div');
@@ -415,6 +415,8 @@ world = {
     
         }
         world.lud[0][4]='red'; //метим первого красным цветом
+        world.lud[1][4]='green';
+        world.lud[2][4]='blue';
         world.lud[0][3]=1;
        // console.log(world.lud);
        //console.log(world.plane);
