@@ -1,5 +1,8 @@
 window.onload = function () {
-//сервисные функции
+
+
+
+    //сервисные функции
     function rand(min, max) {
         min = parseInt(min, 10);
         max = parseInt(max, 10);
@@ -68,8 +71,8 @@ window.onload = function () {
     }
     
     function drawMan(man) {
-        var x = man[0],
-            y = man[1],
+        var y = man[0],
+            x = man[1],
             radius = man[2],
             id =  man[5],
             color = man[4];
@@ -79,16 +82,16 @@ if (id > 0) {
         var 
         d = document.getElementById(id);
         
-        d.style.left = y*10;
-        d.style.top = x*10;
-        d.style.width='9px';
-        d.style.height='9px';
+        d.style.left = y*20;
+        d.style.top = x*20;
+        d.style.width='19px';
+        d.style.height='19px';
         d.style.background=color;
         d.style.position='absolute';
-       // d.innerHTML=id;
-        d.style.fontSize='5px';
+        d.innerHTML=x+' '+y;
+        d.style.fontSize='9px';
         d.style.color='white';
-        d.style.border=1;
+        d.style.border='solid 1';
         d.style.borderColor='green';
         document.body.appendChild(d);
 }
@@ -108,17 +111,17 @@ if (id > 0) {
         var step = ((new Date()).getTime() - startTime)/1000+1;
             world.render();
             world.calculate();
-            setTimeout((function () {animate(myWorld, startTime); }),5);
+            setTimeout((function () {animate(myWorld, startTime); }),world.v);
     }
     
 ///////  
     
 world = {
-    H: 30,
-    W: 30,
+    H: 5,
+    W: 7,
     Day: 3,
-    v: 1,
-    population : 200,
+    v: 100,
+    population : 5,
     lud: {x : 1,
           y : 1,
           r : 1,
@@ -126,7 +129,6 @@ world = {
           c : 1,
          id : 1},
     plane : [],
-    plane2: [],
     calculate: function() {
     //перебираем всех по очереди
 
@@ -157,6 +159,7 @@ world = {
                                    //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0];
                                     man[1] = this.lud[keyC][1]-1;
+                                        idop =id;
 
                                 }
                         }
@@ -178,6 +181,7 @@ world = {
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1]-1;
+                                        idop =id;
                                 }
                         }
                     }
@@ -195,6 +199,7 @@ world = {
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1];
+                                        idop =id;
                                 }
                         }
                 }
@@ -214,6 +219,7 @@ world = {
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1]+1;
+                                        idop =id;
                                 }
                         }
                     }
@@ -232,6 +238,7 @@ world = {
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0];
                                     man[1] = this.lud[keyC][1]+1;
+                                       idop =id;
                                 }
                         }
                     }
@@ -251,6 +258,7 @@ world = {
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1]+1;
+                                       idop =id;
                                 }
                         }
                     }
@@ -268,6 +276,7 @@ world = {
                                         //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1];
+                                        idop =id;
                                 }
                         }
                     }
@@ -287,6 +296,7 @@ world = {
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1]-1;
+                                      idop =id;
                                 }
                         }
                     }
@@ -299,12 +309,19 @@ world = {
                 default:
             alert('1')
             }
-        world.plane[xmy][ymy]=0;
+
 
 
 
     }
         
+    //создаем пустое пространство
+        for (var i = 0; i < this.W+1; i++) {
+            world.plane[i]=[];
+         for (var j = 0; j < this.H+1; j++) {
+            world.plane[i][j] = [0];
+        }
+        }
     //перебираем всех по очереди
     for (var i = 0; i < world.population; i++) {
             var px = world.lud[i][0];
@@ -349,17 +366,17 @@ world = {
     var tbody = document.createElement('tbody');
         //tbody.style.border=1;
     // loop array
-    for (i = 0; i < world.W; i++) {
+    for (i = 0; i < world.H; i++) {
         // get inner array
         var vals = world.plane[i];
         // create tr element
         var row = document.createElement('tr');
         // loop inner array
-        for (var b = 0; b < world.H; b++) {
+        for (var b = 0; b < world.W; b++) {
             // create td element
             var cell = document.createElement('td');
             // set text
-            cell.style.border='1';
+            cell.style.border='solid 1';
             cell.textContent = vals[b];
             // append td to tr
             row.appendChild(cell);
@@ -416,6 +433,25 @@ world = {
     }
 }    
  
+ var maxV = 1000,
+    slider = $("#slider").slider({
+    animate:1000,
+    min:0,
+    value:100,
+    max:maxV,
+    step:10,
+    slide:function(event,ui){
+        $("#rad").val(ui.value);
+        $radbutton = $("#rad").val();
+        $("#create_button").css("border-radius", $radbutton+"px");
+        world.v = ui.value;
+    }
+});
+$('#rad').on('input',function() {
+    world.v = parseInt($(this).val(), 10);
+    if(!isNaN(v) && v <= maxV && v >= 0) {slider.slider('value', world.v)}
+    else $(this).val('');
+});
 
 //конец ядра
     
