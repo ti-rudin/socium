@@ -88,7 +88,8 @@ if (id > 0) {
         d.style.height='19px';
         d.style.background=color;
         d.style.position='absolute';
-        d.innerHTML=x+' '+y;
+        //d.innerHTML=x+' '+y;
+        d.innerHTML=man[3];
         d.style.fontSize='9px';
         d.style.color='white';
         d.style.border='solid 1';
@@ -117,11 +118,11 @@ if (id > 0) {
 ///////  
     
 world = {
-    H: 5,
-    W: 7,
+    H: 20,
+    W: 20,
     Day: 3,
-    v: 100,
-    population : 5,
+    v: 1000,
+    population : 20,
     lud: {x : 1,
           y : 1,
           r : 1,
@@ -140,7 +141,7 @@ world = {
         idmy = world.plane[xmy][ymy]; //получаем массив своей ячейки в plane
         
         id = man[5];
-       // console.log(id,xmy,ymy,idmy,man[3]);
+        console.log(id,xmy,ymy,idmy,man[3]);
     //смотрим направление и калькулируем
 
     switch (man[3]) {
@@ -159,7 +160,7 @@ world = {
                                    //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0];
                                     man[1] = this.lud[keyC][1]-1;
-                                        idop =id;
+                                        idop = (id);
 
                                 }
                         }
@@ -181,7 +182,7 @@ world = {
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1]-1;
-                                        idop =id;
+                                        idop = (id);
                                 }
                         }
                     }
@@ -199,7 +200,7 @@ world = {
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1];
-                                        idop =id;
+                                        idop = (id);
                                 }
                         }
                 }
@@ -219,7 +220,7 @@ world = {
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1]+1;
-                                        idop =id;
+                                        idop = (id);
                                 }
                         }
                     }
@@ -238,7 +239,7 @@ world = {
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0];
                                     man[1] = this.lud[keyC][1]+1;
-                                       idop =id;
+                                        idop = (id);
                                 }
                         }
                     }
@@ -258,7 +259,7 @@ world = {
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1]+1;
-                                       idop =id;
+                                        idop = (id);
                                 }
                         }
                     }
@@ -276,7 +277,7 @@ world = {
                                         //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1];
-                                        idop =id;
+                                        idop = (id);
                                 }
                         }
                     }
@@ -296,7 +297,7 @@ world = {
                                     //пересчитываем коодинаты
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1]-1;
-                                      idop =id;
+                                        idop = (id);
                                 }
                         }
                     }
@@ -326,7 +327,7 @@ world = {
     for (var i = 0; i < world.population; i++) {
             var px = world.lud[i][0];
             var py = world.lud[i][1];
-            world.plane[px][py]=i;
+            world.plane[px][py]=i+1;
 
     }
 
@@ -350,10 +351,10 @@ world = {
 
         document.body.appendChild(q);
         q2 = document.getElementById('mon_idop');
-        var x,y;
-        x=world.lud[(idmon-1)][0];
-        y=world.lud[(idmon-1)][1];
-        q2.innerHTML=world.plane[x][y];
+        //var x,y;
+        //x=world.lud[(idmon-1)][0];
+        //y=world.lud[(idmon-1)][1];
+        //q2.innerHTML=world.plane[x][y];
         //q2.style.position=relative;
         document.body.appendChild(q2);
 
@@ -368,7 +369,7 @@ world = {
     // loop array
     for (i = 0; i < world.H; i++) {
         // get inner array
-        var vals = world.plane[i];
+        //var vals = world.plane[i];
         // create tr element
         var row = document.createElement('tr');
         // loop inner array
@@ -377,7 +378,7 @@ world = {
             var cell = document.createElement('td');
             // set text
             cell.style.border='solid 1';
-            cell.textContent = vals[b];
+            cell.textContent = world.plane[b][i];
             // append td to tr
             row.appendChild(cell);
         }
@@ -391,6 +392,8 @@ world = {
     container.appendChild(table);
 
         /////////////////////
+               console.log(world.plane);
+
 
     },
     createworld : function(){
@@ -405,8 +408,8 @@ world = {
     //создаем популяцию на основе случайных величин
         for (var i = 0; i < (this.population); i++) {
             world.lud[i]=[
-                (rand(1,world.W-1)),
-                (rand(1,world.H-1)),
+                i,
+                2,
                 (rand(1,2)),
                 (rand(1,8)),
                 'rgba(0, 0, 255, 0.26)',
@@ -428,7 +431,7 @@ world = {
         world.lud[2][4]='blue';
         world.lud[0][3]=1;
        // console.log(world.lud);
-       //console.log(world.plane);
+       console.log(world.plane);
 
     }
 }    
@@ -458,7 +461,8 @@ $('#rad').on('input',function() {
     
 
 world.createworld();
-
+world.render();
+    world.monitorman(1);
     
 startTime = (new Date()).getTime();
 animate(world,startTime);

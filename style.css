@@ -19,8 +19,10 @@
     font-size: 12px;
     left: 570px;
     top : 55px;
-}
 
+}
+td {padding: 3;
+width : 15;}
 #slider {
-    width: 50%;
+    width: 200px;
 }
