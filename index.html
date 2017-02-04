@@ -32,7 +32,8 @@
   var button = document.querySelector("button");
   button.addEventListener("click", function() {
     //render();
-    //world.calculate();
+    world.calculate();
+    world.render();
     world.monitorman(1);
 //console.log(world.plane);
   });

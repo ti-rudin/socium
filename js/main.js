@@ -11,7 +11,7 @@ window.onload = function () {
     window.requestAnimFrame = (function (callback) {
         return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
             function (callback) {
-                window.setTimeout(callback, 1000/30);
+                window.setTimeout(callback, 1000/60);
             };
     }
                               )();
@@ -82,10 +82,10 @@ if (id > 0) {
         var 
         d = document.getElementById(id);
         
-        d.style.left = y*20;
-        d.style.top = x*20;
-        d.style.width='19px';
-        d.style.height='19px';
+        d.style.left = y*8;
+        d.style.top = x*8;
+        d.style.width='7px';
+        d.style.height='7px';
         d.style.background=color;
         d.style.position='absolute';
         //d.innerHTML=x+' '+y;
@@ -115,14 +115,14 @@ if (id > 0) {
             setTimeout((function () {animate(myWorld, startTime); }),world.v);
     }
     
-///////  
+///////
     
 world = {
-    H: 20,
-    W: 20,
+    H: 40,
+    W: 40,
     Day: 3,
     v: 1000,
-    population : 20,
+    population : 100,
     lud: {x : 1,
           y : 1,
           r : 1,
@@ -138,10 +138,11 @@ world = {
         var man = this.lud[keyC];
         xmy = man[0];
         ymy = man[1];
-        idmy = world.plane[xmy][ymy]; //получаем массив своей ячейки в plane
-        
+       // idmy = world.plane[xmy][ymy]; //получаем массив своей ячейки в plane
+       // idmy = 0;
+        world.plane[xmy][ymy]=0;
         id = man[5];
-        console.log(id,xmy,ymy,idmy,man[3]);
+       // console.log(id,xmy,ymy,idmy,man[3]);
     //смотрим направление и калькулируем
 
     switch (man[3]) {
@@ -158,9 +159,11 @@ world = {
                                     man[3] = rand(1,8); } else {
 
                                    //пересчитываем коодинаты
+                                    idmy = [];
+
                                     man[0] = this.lud[keyC][0];
                                     man[1] = this.lud[keyC][1]-1;
-                                        idop = (id);
+                                    idop = (id);
 
                                 }
                         }
@@ -180,9 +183,11 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
                                     //пересчитываем коодинаты
+                                    idmy = [];
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1]-1;
-                                        idop = (id);
+                                    idop = (id);
+
                                 }
                         }
                     }
@@ -198,9 +203,11 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
                                     //пересчитываем коодинаты
+                                    idmy = [];
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1];
-                                        idop = (id);
+                                    idop = (id);
+
                                 }
                         }
                 }
@@ -218,9 +225,11 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
                                     //пересчитываем коодинаты
+                                    idmy = [];
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1]+1;
-                                        idop = (id);
+                                    idop = (id);
+
                                 }
                         }
                     }
@@ -237,9 +246,11 @@ world = {
                                     man[3] = rand(1,8); } else {
 
                                     //пересчитываем коодинаты
+                                        idmy = [];
                                     man[0] = this.lud[keyC][0];
                                     man[1] = this.lud[keyC][1]+1;
-                                        idop = (id);
+                                    idop = (id);
+
                                 }
                         }
                     }
@@ -257,9 +268,11 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
                                     //пересчитываем коодинаты
+                                        idmy = [];
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1]+1;
-                                        idop = (id);
+                                    idop = (id);
+
                                 }
                         }
                     }
@@ -275,9 +288,11 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = 8; } else {
                                         //пересчитываем коодинаты
+                                        idmy = [];
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1];
-                                        idop = (id);
+                                    idop = (id);
+
                                 }
                         }
                     }
@@ -295,9 +310,11 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = 1; } else {
                                     //пересчитываем коодинаты
+                                        idmy = [];
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1]-1;
-                                        idop = (id);
+                                    idop = (id);
+
                                 }
                         }
                     }
@@ -317,12 +334,12 @@ world = {
     }
         
     //создаем пустое пространство
-        for (var i = 0; i < this.W+1; i++) {
-            world.plane[i]=[];
-         for (var j = 0; j < this.H+1; j++) {
-            world.plane[i][j] = [0];
-        }
-        }
+    //    for (var i = 0; i < this.W+1; i++) {
+     //       world.plane[i]=[];
+     //    for (var j = 0; j < this.H+1; j++) {
+     //       world.plane[i][j] = [0];
+     //   }
+      //  }
     //перебираем всех по очереди
     for (var i = 0; i < world.population; i++) {
             var px = world.lud[i][0];
@@ -378,7 +395,10 @@ world = {
             var cell = document.createElement('td');
             // set text
             cell.style.border='solid 1';
-            cell.textContent = world.plane[b][i];
+            var temp = world.lud[(world.plane[b][i])-1];
+            if (temp>0) {
+            cell.textContent = world.plane[b][i]+' '+ temp;}
+            else {cell.textContent = world.plane[b][i]};
             // append td to tr
             row.appendChild(cell);
         }
@@ -401,15 +421,15 @@ world = {
         for (var i = 0; i < this.W+1; i++) {
             world.plane[i]=[];
          for (var j = 0; j < this.H+1; j++) {
-            world.plane[i][j] = [0];
+            world.plane[i][j] = [];
         }
         }
 
     //создаем популяцию на основе случайных величин
         for (var i = 0; i < (this.population); i++) {
             world.lud[i]=[
-                i,
-                2,
+                (rand(1,world.W-1)),
+                (rand(1,world.H-1)),
                 (rand(1,2)),
                 (rand(1,8)),
                 'rgba(0, 0, 255, 0.26)',
@@ -436,18 +456,18 @@ world = {
     }
 }    
  
- var maxV = 1000,
+ var maxV = 300,
     slider = $("#slider").slider({
     animate:1000,
     min:0,
     value:100,
     max:maxV,
-    step:10,
+    step:1,
     slide:function(event,ui){
         $("#rad").val(ui.value);
         $radbutton = $("#rad").val();
         $("#create_button").css("border-radius", $radbutton+"px");
-        world.v = ui.value;
+        world.v = 300 - ui.value;
     }
 });
 $('#rad').on('input',function() {
