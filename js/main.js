@@ -17,7 +17,7 @@ window.onload = function () {
                               )();
 //переменные
     'use strict';
-    var v = 2; //скорость пикселей/сек
+    //var v = 2; //скорость пикселей/сек
   //      canvas = document.getElementById('myCanvas'),
 //        context = canvas.getContext('2d');
 
@@ -82,10 +82,10 @@ if (id > 0) {
         var 
         d = document.getElementById(id);
         
-        d.style.left = y*8;
-        d.style.top = x*8;
-        d.style.width='7px';
-        d.style.height='7px';
+        d.style.left = y*10;
+        d.style.top = x*10;
+        d.style.width='9px';
+        d.style.height='9px';
         d.style.background=color;
         d.style.position='absolute';
         //d.innerHTML=x+' '+y;
@@ -118,11 +118,11 @@ if (id > 0) {
 ///////
     
 world = {
-    H: 40,
-    W: 40,
+    H: 50,
+    W: 50,
     Day: 3,
     v: 1000,
-    population : 100,
+    population : 400,
     lud: {x : 1,
           y : 1,
           r : 1,
@@ -140,7 +140,7 @@ world = {
         ymy = man[1];
        // idmy = world.plane[xmy][ymy]; //получаем массив своей ячейки в plane
        // idmy = 0;
-        world.plane[xmy][ymy]=0;
+       // world.plane[xmy][ymy]=0;
         id = man[5];
        // console.log(id,xmy,ymy,idmy,man[3]);
     //смотрим направление и калькулируем
@@ -154,16 +154,17 @@ world = {
                     } else {
                         //иначе
                             var idop = this.plane[xmy][ymy-1]; //получаем массив с оппонентами
+                        //console.log(idop);
                             if (idop>0) { 
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
 
                                    //пересчитываем коодинаты
-                                    idmy = [];
-
+                                    //world.plane[xmy][ymy]=0;
+                                    world.plane[xmy][ymy-1]=id;
                                     man[0] = this.lud[keyC][0];
                                     man[1] = this.lud[keyC][1]-1;
-                                    idop = (id);
+
 
                                 }
                         }
@@ -183,10 +184,9 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
                                     //пересчитываем коодинаты
-                                    idmy = [];
+                                    world.plane[xmy+1][ymy-1]=id;
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1]-1;
-                                    idop = (id);
 
                                 }
                         }
@@ -203,10 +203,9 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
                                     //пересчитываем коодинаты
-                                    idmy = [];
+                                    world.plane[xmy+1][ymy]=id;
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1];
-                                    idop = (id);
 
                                 }
                         }
@@ -225,10 +224,9 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
                                     //пересчитываем коодинаты
-                                    idmy = [];
+                                    world.plane[xmy+1][ymy+1]=id;
                                     man[0] = this.lud[keyC][0]+1;
                                     man[1] = this.lud[keyC][1]+1;
-                                    idop = (id);
 
                                 }
                         }
@@ -246,10 +244,9 @@ world = {
                                     man[3] = rand(1,8); } else {
 
                                     //пересчитываем коодинаты
-                                        idmy = [];
+                                    world.plane[xmy][ymy+1]=id;
                                     man[0] = this.lud[keyC][0];
                                     man[1] = this.lud[keyC][1]+1;
-                                    idop = (id);
 
                                 }
                         }
@@ -268,10 +265,9 @@ world = {
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8); } else {
                                     //пересчитываем коодинаты
-                                        idmy = [];
+                                    world.plane[xmy-1][ymy+1]=id;
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1]+1;
-                                    idop = (id);
 
                                 }
                         }
@@ -283,15 +279,14 @@ world = {
                         man[3] = 3;}//если уперлись, то просто меняем направление
                     else {
                         //иначе
-                            var idop = this.plane[xmy+1][ymy]; //получаем массив с оппонентами
+                            var idop = this.plane[xmy-1][ymy]; //получаем массив с оппонентами
                             if (idop>0) {
                                     //если массив с оппонентами не пустой, то просто меняем направление
-                                    man[3] = 8; } else {
+                                    man[3] = rand(1,8); } else {
                                         //пересчитываем коодинаты
-                                        idmy = [];
+                                    world.plane[xmy-1][ymy]=id;
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1];
-                                    idop = (id);
 
                                 }
                         }
@@ -308,12 +303,11 @@ world = {
                             var idop = this.plane[xmy-1][ymy-1]; //получаем массив с оппонентами
                             if (idop>0) {
                                     //если массив с оппонентами не пустой, то просто меняем направление
-                                    man[3] = 1; } else {
+                                    man[3] = rand(1,8); } else {
                                     //пересчитываем коодинаты
-                                        idmy = [];
+                                    world.plane[xmy-1][ymy-1]=id;
                                     man[0] = this.lud[keyC][0]-1;
                                     man[1] = this.lud[keyC][1]-1;
-                                    idop = (id);
 
                                 }
                         }
@@ -333,13 +327,13 @@ world = {
 
     }
         
-    //создаем пустое пространство
-    //    for (var i = 0; i < this.W+1; i++) {
-     //       world.plane[i]=[];
-     //    for (var j = 0; j < this.H+1; j++) {
-     //       world.plane[i][j] = [0];
-     //   }
-      //  }
+   // создаем пустое пространство
+        for (var i = 0; i < this.W+1; i++) {
+            world.plane[i]=[];
+         for (var j = 0; j < this.H+1; j++) {
+            world.plane[i][j] = [0];
+        }
+        }
     //перебираем всех по очереди
     for (var i = 0; i < world.population; i++) {
             var px = world.lud[i][0];
