@@ -304,7 +304,7 @@ world = {
             }
     }
         
-   // создаем пустое пространство
+   // очищаем пространство
         for (var i = 0; i < this.W+1; i++) {
             world.plane[i]=[];
          for (var j = 0; j < this.H+1; j++) {
@@ -416,7 +416,7 @@ world = {
     }
 }    
  
- var maxV = 500,
+ var maxV = 1500,
     slider = $("#slider").slider({
     animate:1000,
     min:0,
@@ -427,7 +427,7 @@ world = {
         $("#rad").val(ui.value);
         $radbutton = $("#rad").val();
         $("#create_button").css("border-radius", $radbutton+"px");
-        world.v = 500 - ui.value;
+        world.v = 1500 - ui.value;
     }
 });
 $('#rad').on('input',function() {
