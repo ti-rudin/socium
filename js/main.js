@@ -82,10 +82,10 @@ if (id > 0) {
         var 
         d = document.getElementById(id);
         
-        d.style.left = y*10;
-        d.style.top = x*10;
-        d.style.width='9px';
-        d.style.height='9px';
+        d.style.left = y*15;
+        d.style.top = x*15;
+        d.style.width='14px';
+        d.style.height='14px';
         d.style.background=color;
         d.style.position='absolute';
         //d.innerHTML=x+' '+y;
@@ -118,11 +118,11 @@ if (id > 0) {
 ///////
     
 world = {
-    H: 50,
-    W: 50,
+    H: 40,
+    W: 40,
     Day: 3,
     v: 1000,
-    population : 400,
+    population : 100,
     lud: {x : 1,
           y : 1,
           r : 1,
@@ -476,7 +476,7 @@ $('#rad').on('input',function() {
 
 world.createworld();
 world.render();
-    world.monitorman(1);
+   // world.monitorman(1);
     
 startTime = (new Date()).getTime();
 animate(world,startTime);
