@@ -44,8 +44,8 @@ window.onload = function () {
 
     
     function drawMan(man) {
-        var y = man[0],
-            x = man[1],
+        var y = man[1],
+            x = man[0],
             radius = man[2],
             id =  man[5],
             color = man[4];
@@ -72,12 +72,13 @@ window.onload = function () {
         
         
         context.beginPath();
-        context.arc(x*8, y*8, 4, 0, 2 * Math.PI, false);
+        context.arc(x*18, y*18, 9, 0, 2 * Math.PI, false);
         context.fillStyle = color;
-        context.fillText=man[6];
+      
         context.fill();
         context.lineWidth = radius;
         context.strokeStyle = 'black';
+          context.fillText(man[6], x*18, y*18);
         context.stroke();
     }
     function animate(myWorld, canvas, context, startTime) {
@@ -90,11 +91,11 @@ window.onload = function () {
 ///////
     
 world = {
-    H: 70,
-    W: 70,
+    H: 30,
+    W: 30,
     Tick: 1,
     v: 100,
-    population : 50,
+    population : 20,
     lud: {x : 1,
           y : 1,
           r : 1,
