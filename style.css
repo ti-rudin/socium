@@ -21,6 +21,14 @@
     top : 55px;
 
 }
+#mon_Tick{
+    position: absolute;
+    font-size: 12px;
+    left: 530px;
+    top : 81px;
+
+}
+
 td {padding: 3;
 width : 15;}
 #slider {

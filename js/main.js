@@ -17,8 +17,8 @@ window.onload = function () {
                               )();
 //переменные
     'use strict';
-  //      canvas = document.getElementById('myCanvas'),
-//        context = canvas.getContext('2d');
+        canvas = document.getElementById('myCanvas'),
+        context = canvas.getContext('2d');
 
 //ядровые функции 
 
@@ -50,62 +50,73 @@ window.onload = function () {
             id =  man[5],
             color = man[4];
 
-        if (id > 0) {
-        var 
-        d = document.getElementById(id);
+
+       // d = document.getElementById(id);
         
-        d.style.left = y*15;
-        d.style.top = x*15;
-        d.style.width='14px';
-        d.style.height='14px';
-        d.style.background=color;
-        d.style.position='absolute';
-        //d.innerHTML=x+' '+y;
-        d.innerHTML=man[6];
-        d.style.fontSize='9px';
-        d.style.color='white';
-        d.style.border='solid 1';
-        d.style.borderColor='green';
-        document.body.appendChild(d);
-}
+    //    d.style.left = y*15;
+      //  d.style.top = x*15;
+    //    d.style.width='14px';
+    //    d.style.height='14px';
+    //    d.style.background=color;
+    //    d.style.position='absolute';
+    //    //d.innerHTML=x+' '+y;
+    //    d.innerHTML=man[6];
+    //    d.style.fontSize='9px';
+    //    d.style.color='white';
+    //    d.style.border='solid 1';
+    //    d.style.borderColor='green';
+    //    document.body.appendChild(d);
 
 
+
         
         
-        //context.beginPath();
-        //context.arc(x, y, radius, 0, 2 * Math.PI, false);
-        //context.fillStyle = color;
-        //context.fill();
-        //context.lineWidth = radius;
-        //context.strokeStyle = 'black';
-        //context.stroke();
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI, false);
+        context.fillStyle = color;
+        context.fill();
+        context.lineWidth = radius;
+        context.strokeStyle = 'black';
+        context.stroke();
     }
-    function animate(myWorld, startTime) {
+    function animate(myWorld, canvas, context, startTime) {
         var step = ((new Date()).getTime() - startTime)/1000+1;
             world.render();
             world.calculate();
-            setTimeout((function () {animate(myWorld, startTime); }),world.v);
+            setTimeout((function () {animate(myWorld, canvas, context, startTime); }),world.v);
     }
     
 ///////
     
 world = {
-    H: 20,
-    W: 20,
-    Day: 3,
-    v: 1000,
-    population : 20,
+    H: 45,
+    W: 45,
+    Tick: 1,
+    v: 100,
+    population : 50,
     lud: {x : 1,
           y : 1,
           r : 1,
           d : 1,
           c : 1,
          id : 1,
-         colis: 0},
+         colis: 0,
+         capital: 0,
+         borndate: 0},
+    rip : {
+        id: 0,
+        borndate: 0,
+        diedate: 0,
+        r : 0,
+        c : 0,
+        colis: 0,
+        capital: 0 //в первой итерации капитал теряется, как будто перед смертью чувак все где-то зарыл
+
+    },
     plane : [],
     calculate: function() {
     //перебираем всех по очереди
-
+    world.Tick=world.Tick+1;
     for (var keyC = 0; keyC < world.population; keyC++) {
 
         var man = this.lud[keyC];
@@ -127,11 +138,11 @@ world = {
                             if (idop>0) { 
                                     //если массив с оппонентами не пустой, то просто меняем направление
                                     man[3] = rand(1,8);
-                                    man[6] = man[6]+1;
+                                    man[6] = man[6]+1;//счетчик столкновений +1
 
                                     } else {
                                    //пересчитываем коодинаты
-                                    world.plane[xmy][ymy-1]=id;
+                                    world.plane[xmy][ymy-1]=id;//метим себя в plane
                                     man[0] = this.lud[keyC][0];
                                     man[1] = this.lud[keyC][1]-1;
                                     }
@@ -302,6 +313,7 @@ world = {
                 default:
             alert('1')
             }
+
     }
         
    // очищаем пространство
@@ -322,8 +334,13 @@ world = {
 
     },
     render: function(){
-  //      context.clearRect(0, 0, canvas.width, canvas.height); //очищаем
-  
+        context.clearRect(0, 0, canvas.width, canvas.height); //очищаем
+  q3 = document.getElementById('mon_Tick');
+        q3.innerHTML=world.Tick;
+
+        document.body.appendChild(q3);
+
+
     for (var key in this.lud)   {
         man = this.lud[key];
        // console.log(key);
@@ -339,6 +356,8 @@ world = {
         q.innerHTML=idmon;
 
         document.body.appendChild(q);
+
+
         q2 = document.getElementById('mon_idop');
         q.innerHTML=world.lud[idmon][6];
         document.body.appendChild(q2);
@@ -427,7 +446,7 @@ world = {
         $("#rad").val(ui.value);
         $radbutton = $("#rad").val();
         $("#create_button").css("border-radius", $radbutton+"px");
-        world.v = 1500 - ui.value;
+        world.v = maxV - ui.value;
     }
 });
 $('#rad').on('input',function() {
@@ -445,6 +464,6 @@ world.render();
    // world.monitorman(1);
     
 startTime = (new Date()).getTime();
-animate(world,startTime);
+animate(world,canvas, context,startTime);
 
 };
