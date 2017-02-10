@@ -72,7 +72,7 @@ window.onload = function () {
         
         
         context.beginPath();
-        context.arc(x, y, radius, 0, 2 * Math.PI, false);
+        context.arc(x*14, y*14, 7, 0, 2 * Math.PI, false);
         context.fillStyle = color;
         context.fill();
         context.lineWidth = radius;
