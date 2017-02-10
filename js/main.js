@@ -74,6 +74,7 @@ window.onload = function () {
         context.beginPath();
         context.arc(x*8, y*8, 4, 0, 2 * Math.PI, false);
         context.fillStyle = color;
+        context.fillText=man[6];
         context.fill();
         context.lineWidth = radius;
         context.strokeStyle = 'black';
@@ -93,7 +94,7 @@ world = {
     W: 70,
     Tick: 1,
     v: 100,
-    population : 500,
+    population : 50,
     lud: {x : 1,
           y : 1,
           r : 1,
