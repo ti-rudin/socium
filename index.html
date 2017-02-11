@@ -1,0 +1,47 @@
+<html>
+<head>
+<link href="style.css" rel="stylesheet" type="text/css" media="all"/>
+<script type="text/javascript" src="js/jquery-3.1.1.js">
+    </script>
+<script src="js/main.js"></script>
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+
+
+
+
+
+
+
+      <script type="text/javascript" src="js/jquery-ui.js"></script>
+
+
+      <link rel="stylesheet" type="text/css" href="js/jquery-ui.css"></head>
+<body>
+
+<<<<<<< HEAD
+<canvas id="myCanvas" width="800" height="600"></canvas>
+<div id="monitor">
+    <div id="slider"></div>
+<input type="text" id="rad">
+    <button>Следующий кадр</button><br><br>
+=======
+<div id="myCanvas" width="800" height="600"></div>
+>>>>>>> origin/letaetnadivah
+
+    ID в фокусе: <a id="mon_id"></a><br>
+    Кто по курсу: <a id="mon_idop"></a><br>
+    Tick: <a id="mon_Tick"></a><br>
+    <div id="container"></div>
+</div>
+    <script>
+  var button = document.querySelector("button");
+  button.addEventListener("click", function() {
+    //render();
+    world.calculate();
+    world.render();
+    world.monitorman(1);
+//console.log(world.plane);
+  });
+</script>
+</body>
+</html>

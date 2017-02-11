@@ -1,0 +1,36 @@
+.man{
+    border: 2px;
+    border-bottom-style: dotted;
+}
+#monitor {
+    position: relative;
+    left: 500px;
+    font-size: 10px;
+    color: black;
+}
+#mon_id{
+    position:absolute;
+    font-size: 12px;
+    left: 570px;
+    top : 40px;
+}
+#mon_idop{
+    position: absolute;
+    font-size: 12px;
+    left: 570px;
+    top : 55px;
+
+}
+#mon_Tick{
+    position: absolute;
+    font-size: 12px;
+    left: 530px;
+    top : 81px;
+
+}
+
+td {padding: 3;
+width : 15;}
+#slider {
+    width: 300px;
+}
